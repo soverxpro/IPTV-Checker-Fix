@@ -1,7 +1,7 @@
 # IPTV Checker
 
 ![Python](https://img.shields.io/badge/Python-3.x-blue.svg)
-![License](https://img.shields.io/github/license/yourusername/yourrepositoryname)
+![License](https://github.com/soverxpro/IPTV-Checker-Fix)
 
 Этот скрипт представляет собой утилиту для проверки работоспособности каналов в IPTV плейлистах. Он осуществляет проверку каждого канала на доступность с использованием различных методов, таких как проверка с помощью FFmpeg, FFprobe и HTTP-запросов. Скрипт анализирует структуру плейлиста, обеспечивая его корректность, а затем создает новый плейлист, содержащий только рабочие каналы.
 
@@ -40,5 +40,3 @@ python iptv_checker.py -p playlist.m3u --timeout 15 -o working_channels.m3u
 Этот проект лицензируется под [лицензией MIT](LICENSE).
 
 ---
-
-Пожалуйста, не забудьте заменить `yourusername/yourrepositoryname` на свой актуальный GitHub username и название репозитория.
