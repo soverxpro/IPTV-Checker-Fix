@@ -1,0 +1,729 @@
+#EXTM3U
+#EXTINF:-1,ВСЕ ТВ 07.06.24 FAS-TV.COM
+https://iptv.org.ua/wp-content/uploads/2022/01/Moyo-slayd33-shou.mp4
+#EXTINF:-1,ПЕРШИЙ
+https://ext.cdn.nashnet.tv/228.0.2.45/index.m3u8
+#EXTINF:-1,1+1 Марафон
+http://85.223.221.130:8000/play/a09r
+#EXTINF:-1,1+1 International
+http://ott.watch/stream/4LMG17SVYT/105.m3u8
+#EXTINF:-1,1+1 УКРАЇНА
+http://85.223.221.130:8000/play/a09p
+#EXTINF:-1,1+1 Україна
+http://85.223.221.130:8000/play/a09s
+#EXTINF:-1,Два+Два
+http://85.223.221.130:8000/play/a09w
+#EXTINF:-1,ICTV
+http://85.223.221.130:8000/play/a08x
+#EXTINF:-1,ICTV 2
+http://85.223.221.130:8000/play/a092
+#EXTINF:-1,СТБ
+http://85.223.221.130:8000/play/a09q
+#EXTINF:-1,НОВИЙ КАНАЛ
+http://85.223.221.130:8000/play/a08y
+#EXTINF:-1,ТЕТ
+http://85.223.221.130:8000/play/a09t
+#EXTINF:-1,НТН HD
+http://85.223.221.130:8000/play/a0a3
+#EXTINF:-1,Enter Film HD
+http://85.223.221.130:8000/play/a0a7
+#EXTINF:-1,K1 HD
+http://85.223.221.130:8000/play/a0a5
+#EXTINF:-1,ІНТЕР+
+http://85.223.221.130:8000/play/a04i
+#EXTINF:-1,Твій серіал
+http://85.223.221.130:8000/play/a093
+#EXTINF:-1,Бігуді
+http://85.223.221.130:8000/play/a09v
+#EXTINF:-1,KinoSweet UA FUL HD
+http://85.223.221.130:8000/play/a08b
+#EXTINF:-1,KinoSweet UA HD
+http://95.67.12.180:11111
+#EXTINF:-1,Prokop TV HD UA
+http://158.101.194.132:8888/channel/n78ab16b6/index.m3u8?q=e97d5e5700840fb25c877ebd6f8590db
+#EXTINF:-1,Україна
+https://ipv4.bozztv.com/dvrfl07/ushba5/tracks-v1a1/mono.m3u8
+#EXTINF:-1,Україна 2
+https://ipv4.bozztv.com/dvrfl07/ushba12/tracks-v1a1/mono.m3u8
+#EXTINF:-1,ОЦЕ
+http://85.223.221.130:8000/play/a091
+#EXTINF:-1,Kvartal
+http://85.223.221.130:8000/play/a076
+#EXTINF:-1,DIM TV
+http://85.223.221.130:8000/play/a0ab
+#EXTINF:-1,Gags Network HD
+http://95.67.12.82:9069
+#EXTINF:-1,VIASAT KINO ACTION
+http://85.223.221.130:8000/play/a05x
+#EXTINF:-1,VIASAT KINO MEGAHIT
+http://85.223.221.130:8000/play/a08c
+#EXTINF:-1,VIASAT KINO WORLD
+http://85.223.221.130:8000/play/a074
+#EXTINF:-1,VIASAT KINO HD COMEDY
+http://85.223.221.130:8000/play/a06z
+#EXTINF:-1,VIASAT SERIAL
+http://85.223.221.130:8000/play/a072
+#EXTINF:-1,viju+ Comedy
+http://bigline.club:8080/Allgood/m7LkpXsgqbEN/12148
+#EXTINF:-1,viju+ Megahit
+http://bigline.club:8080/Allgood/m7LkpXsgqbEN/12149
+#EXTINF:-1,viju+ Premiere
+http://bigline.club:8080/Allgood/m7LkpXsgqbEN/12150
+#EXTINF:-1,viju+ Serial
+http://bigline.club:8080/Allgood/m7LkpXsgqbEN/14708
+#EXTINF:-1,Viju TV1000
+http://91.205.199.3/tv1000/index.m3u8
+#EXTINF:-1,Viju TV1000 Action
+http://91.205.199.3/tv1000action/index.m3u8
+#EXTINF:-1,Viasat Kino HD
+http://cdnua03.hls.tv/524/hls/8743361621b245838bee193c9ec28322/311/stream.m3u8
+#EXTINF:-1,Viasat Kino Action
+http://cdnua03.hls.tv/524/hls/8743361621b245838bee193c9ec28322/308/stream.m3u8
+#EXTINF:-1,Viasat Kino Megahit HD
+http://cdnua03.hls.tv/524/hls/8743361621b245838bee193c9ec28322/3981/stream.m3u8
+#EXTINF:-1,Viasat World
+http://cdnua03.hls.tv/524/hls/8743361621b245838bee193c9ec28322/4816/stream.m3u8
+#EXTINF:-1,Viasat Kino Comedy
+http://cdnua03.hls.tv/524/hls/8743361621b245838bee193c9ec28322/309/stream.m3u8
+#EXTINF:-1,Kinowood
+http://cdnua03.hls.tv/524/hls/8743361621b245838bee193c9ec28322/4844/stream.m3u8
+#EXTINF:-1,Kinosweet HD
+http://cdnua03.hls.tv/524/hls/8743361621b245838bee193c9ec28322/4876/stream.m3u8
+#EXTINF:-1,Kinoliving
+http://cdnua03.hls.tv/524/hls/8743361621b245838bee193c9ec28322/4805/stream.m3u8
+#EXTINF:-1,Kinowood HD
+http://85.223.221.130:8000/play/a06x
+#EXTINF:-1,Cine+ hit
+http://85.223.221.130:8000/play/a08j
+#EXTINF:-1,Cine+ Legend
+http://85.223.221.130:8000/play/a05e
+#EXTINF:-1,STAR CINEMA UA
+http://85.223.221.130:8000/play/a04y
+#EXTINF:-1,FILM UA DRAMA
+http://85.223.221.130:8000/play/a087
+#EXTINF:-1,CPS ACTION HD
+http://85.223.221.130:8000/play/a032
+#EXTINF:-1,CPS FRESII UA
+http://85.223.221.130:8000/play/a03c
+#EXTINF:-1,KINO 1
+http://85.223.221.130:8000/play/a088
+#EXTINF:-1,Наше улюблене кіно
+http://85.223.221.130:8000/play/a05i
+#EXTINF:-1,Ізмаіл ТВ
+http://cdn10.live-tv.od.ua:8081/izod/izod-abr/playlist.m3u8
+#EXTINF:-1,Flix Snip hd
+http://95.67.12.82:9061
+#EXTINF:-1,Fx HD
+http://85.223.221.130:8000/play/a08d
+#EXTINF:-1,Fox tva* org*ua
+https://stream01.vnet.am/Fox/mono.m3u8
+#EXTINF:-1,FOX Life HD
+http://85.223.221.130:8000/play/a08e
+#EXTINF:-1,Amedia 1 SD
+http://sc.id-tv.kz/A1.m3u8
+#EXTINF:-1,A1
+http://stream01.vnet.am/Channel_128/mono.m3u8
+#EXTINF:-1,Amedia 2 SD
+http://91.205.199.3/amedia2/index.m3u8
+#EXTINF:-1,Amedia hit
+http://sc.id-tv.kz/amedia_hit_hd_34_35.m3u8
+#EXTINF:-1,Amedia Premium
+http://stream01.vnet.am/AmediaPremium/mono.m3u8
+#EXTINF:-1,Индийское кино
+http://sc.id-tv.kz/Indiiskoe_kino.m3u8
+#EXTINF:-1,Индия
+http://stream01.vnet.am/ZeeTV/mono.m3u8
+#EXTINF:-1,RED SD
+http://91.205.199.3/red/index.m3u8
+#EXTINF:-1,SCI-FI SD
+http://91.205.199.3/scifi/index.m3u8
+#EXTINF:-1,black SD
+http://91.205.199.3/black/index.m3u8
+#EXTINF:-1,МАСОН
+http://85.223.221.130:8000/play/a08u
+#EXTINF:-1,1 Автомобільний
+http://85.223.221.130:8000/play/a04w
+#EXTINF:-1,Трофей
+http://85.223.221.130:8000/play/a066
+#EXTINF:-1,Наука
+http://85.223.221.130:8000/play/a064
+#EXTINF:-1,ТЕРА
+http://85.223.221.130:8000/play/a08r
+#EXTINF:-1,Дача
+http://85.223.221.130:8000/play/a07a
+#EXTINF:-1,Рибалка
+http://iptv.prosto.tv:7000/ch344/video.m3u8
+#EXTINF:-1,Sweet
+http://95.67.12.82:9085
+#EXTINF:-1,Сварожичи HD
+http://svarozhichi.cdn-04.cosmonova.net.ua/mobile-app/main/svarozhichi/master.m3u8
+#EXTINF:-1,Discovery Channel HD
+http://stream01.vnet.am/DiscoveryChannel/tracks-v1a2/mono.m3u8
+#EXTINF:-1,ID Investigation Discovery
+http://stream01.vnet.am/InvestigationDiscovery/mono.m3u8
+#EXTINF:-1,ID DISCOVERY
+http://45.159.74.14:80/InvestigationDiscovery/tracks-v1a2/mono.m3u8
+#EXTINF:-1,National Geographic
+http://45.159.74.13:80/NationalGeographic/tracks-v1a1/mono.m3u8
+#EXTINF:-1,National Geographic SD
+http://stream02.vnet.am/NationalGeographic/index.m3u8
+#EXTINF:-1,Animal Planet HD
+http://stream01.vnet.am/AnimalPlanet/tracks-v1a2/mono.m3u8
+#EXTINF:-1,Nat Geo Wild HD
+http://45.159.74.13:80/NatGeoWild/tracks-v1a1/mono.m3u8
+#EXTINF:-1,Viasat Nature
+http://sc.id-tv.kz/ViasatNature_34_35.m3u8
+#EXTINF:-1,Viasat History
+http://sc.id-tv.kz/ViasatHistory_34_35.m3u8
+#EXTINF:-1,Viasat Explore
+http://sc.id-tv.kz/ViasatExplorer_34_35.m3u8
+#EXTINF:-1,Суспільне Культура
+http://85.223.221.130:8000/play/a063
+#EXTINF:-1,Суспільне Одеса
+http://85.223.221.130:8000/play/a05k
+#EXTINF:-1,Суспільне Запоріжжя
+https://stream.ztv.zp.ua/hls/live.m3u8
+#EXTINF:-1,Суспільне Крим
+http://193.107.168.59:7005/play/436/index.m3u8
+#EXTINF:-1,Орбiта tva.org.ua
+http://ftp.orbita.dn.ua/hls/orbita.m3u8
+#EXTINF:-1,ІТ3
+http://cdn10.live-tv.od.ua:8081/it3od/720p/playlist.m3u8
+#EXTINF:-1,Снятин
+http://93.170.188.90:7781/udp/229.1.2.3:1234
+#EXTINF:-1,Круг (Одеса)
+http://cdn1.live-tv.od.ua:8081/krugod/krugod-abr-lq/playlist.m3u8
+#EXTINF:-1,УНІАН SD
+http://85.223.221.130:8000/play/a09z
+#EXTINF:-1,Армія ТВ SD
+http://85.223.221.130:8000/play/a09j
+#EXTINF:-1,24 Канал SD
+http://85.223.221.130:8000/play/a09y
+#EXTINF:-1,СK 1
+http://cdn10.live-tv.od.ua:8081/sk1zt/sk1zt720p/playlist.m3u8
+#EXTINF:-1,FREEдом
+http://95.67.106.242/mobile-app/main/freedom/master.m3u8
+#EXTINF:-1,FREEDOM
+https://freedom.cdn-01.cosmonova.net.ua/mobile-app/main/freedom/master.m3u8
+#EXTINF:-1,Нове тв
+https://novoe.top/nove_tv.m3u8.jpg?m3u8
+#EXTINF:-1,TVA
+https://iptv.org.ua/wp-content/uploads/2022/01/Moyo-slayd33-shou.mp4
+#EXTINF:-1,Надія/N.K.
+http://nadiya.home-net.com.ua/mob/mystream.m3u8
+#EXTINF:-1,Полтавское ТВ
+http://cdn10.live-tv.od.ua:8081/hrpl/720p/playlist.m3u8
+#EXTINF:-1,PTV Полтавское TV
+https://cdn10.live-tv.cloud/hrpl/hrpl-abr/playlist.m3u8
+#EXTINF:-1,Тернопіль 1
+http://185.53.79.12/ternopil1/index.m3u8?cur=tva.org.ua&key=3i277
+#EXTINF:-1,Тернопiль 1 HD
+http://ott.columbus.te.ua/ternopil1/index.m3u8?cur=tva.org.ua&key=3i277
+#EXTINF:-1,НТК Коломия
+https://stream.ntktv.ua/s/ntk/ntk.m3u8?cur=tva.org.ua&key=3i277
+#EXTINF:-1,ТВА tva*org-ua
+http://hls.cdn.ua/tva.ua_live/_definst_/livestream/playlist.m3u8
+#EXTINF:-1,ТВА tva*in-ua
+http://rtsp.cdn.ua/tva.ua_live/_definst_/livestream/playlist.m3u8
+#EXTINF:-1,ГРОМАДСЬКЕ ІНТЕРАКТИВНЕ ТЕЛЕБАЧЕННЯ (Луцьк)
+https://stream.uagit.tv/gittv.m3u8?cur=tva.org.ua&key=3i277
+#EXTINF:-1,33 канал (Хмельницький)
+https://33news.org/33chanel/live/chunklist_w459617257.m3u8
+#EXTINF:-1,МТМ Запоріжжя
+https://stream.ztv.zp.ua/hls/live.m3u8
+#EXTINF:-1,7 канал tva.org.ua
+http://cdn10.live-tv.od.ua:8081/7tvod/7tvod/playlist.m3u8
+#EXTINF:-1,1 Городский Одеса HD
+http://91.194.79.46:8081/stream1/channel1/playlist.m3u8
+#EXTINF:-1,Чорноморська ТРК
+https://stream.skyvision.com.ua/blackseatv/stream/main/playlist.m3u8
+#EXTINF:-1,Аверс (Луцьк)
+https://avers.pp.ua/hls/efir.m3u8?key=iptv*org*ua
+#EXTINF:-1,Bambarbia TV
+http://cdn1.live-tv.od.ua:8081/bbb/bbbtv-720p/playlist.m3u8
+#EXTINF:-1,Дніпро TV HD
+http://vcdn1.produck.company:1935/out/dtv/playlist.m3u8
+#EXTINF:-1,Балта ТВ HD
+http://194.50.51.34/playlist.m3u8
+#EXTINF:-1,Глас
+http://85.238.112.69:8811/hls_sec/239.0.4.18-.m3u8
+#EXTINF:-1,ТРК Надія - Новий Канал (Первомайский)
+http://178.217.215.57/mob/mystream.m3u8
+#EXTINF:-1,СК1 (Житомир)
+http://cdn10.live-tv.od.ua:8081/sk1zt/sk1zt-abr-lq/playlist.m3u8
+#EXTINF:-1,НТК
+http://stream.ntktv.ua/s/ntk/ntk.m3u8
+#EXTINF:-1,ITV (Рівне)
+http://cdn10.live-tv.od.ua:8081/itvrv/abr-lq/playlist.m3u8
+#EXTINF:-1,ITV HD
+http://cdn10.live-tv.od.ua:8081/itvrv/abr/playlist.m3u8
+#EXTINF:-1,ITV
+http://cdn10.live-tv.od.ua:8081/itvrv/720p/playlist.m3u8
+#EXTINF:-1,Сфера ТВ
+http://cdn10.live-tv.od.ua:8081/sferarv/720p/playlist.m3u8
+#EXTINF:-1,М1 HD
+http://85.223.221.130:8000/play/a08z
+#EXTINF:-1,М2 FUL HD
+http://85.223.221.130:8000/play/a090
+#EXTINF:-1,М2 HD
+http://live.m2.tv/hls3/720/stream.m3u8
+#EXTINF:-1,М2
+http://live.m2.tv/hls3/stream.m3u8
+#EXTINF:-1,Loupe TV
+https://d2dw21aq0j0l5c.cloudfront.net/playlist_1920x1080.m3u8
+#EXTINF:-1,Relax iptv.org.ua
+http://185.57.68.33:8091/232/tracks-v1a1/index.m3u8?cur=tva.org.ua&key=3i277
+#EXTINF:-1,Deluxe Lounge HD
+https://stream.ads.ottera.tv/cl/231009cki5o24nsepl2jh7b2eg/1920x1080_5359200_5_f.m3u8
+#EXTINF:-1,Relaxon
+http://176.122.99.7:7000/ch317/video.m3u8
+#EXTINF:-1,Relaxon
+http://iptv.prosto.tv:7000/ch317/video.m3u8
+#EXTINF:-1,Камин
+http://iptv.prosto.tv:7000/ch318/video.m3u8
+#EXTINF:-1,Пейзаж
+http://iptv.prosto.tv:7000/ch343/video.m3u8
+#EXTINF:-1,Space Stream
+http://iptv.prosto.tv:7000/ch314/video.m3u8
+#EXTINF:-1,Про Факт
+http://iptv.prosto.tv:7000/ch315/video.m3u8
+#EXTINF:-1,Зоо
+http://iptv.prosto.tv:7000/ch319/video.m3u8
+#EXTINF:-1,Свет вокруг
+http://iptv.prosto.tv:7000/ch351/video.m3u8
+#EXTINF:-1,Терраса
+https://iptv.prosto.tv/ch336/video.m3u8
+#EXTINF:-1,Горная долина
+http://iptv.prosto.tv:7000/ch302/video.m3u8
+#EXTINF:-1,Просто Украина
+http://iptv.prosto.tv:7000/ch303/video.m3u8
+#EXTINF:-1,Дожди
+http://iptv.prosto.tv:7000/ch304/video.m3u8
+#EXTINF:-1,Подводный мир
+http://iptv.prosto.tv:7000/ch305/video.m3u8
+#EXTINF:-1,Avia Stream
+http://iptv.prosto.tv:7000/ch306/video.m3u8
+#EXTINF:-1,Катастрофы
+http://iptv.prosto.tv:7000/ch312/video.m3u8
+#EXTINF:-1,ЭКО система
+http://iptv.prosto.tv:7000/ch316/video.m3u8
+#EXTINF:-1,Stream City
+http://iptv.prosto.tv:7000/ch321/video.m3u8
+#EXTINF:-1,Аквариум
+http://iptv.prosto.tv:7000/ch325/video.m3u8
+#EXTINF:-1,Комната релакс
+http://iptv.prosto.tv:7000/ch328/video.m3u8
+#EXTINF:-1,Зима
+https://iptv.prosto.tv/ch327/video.m3u8
+#EXTINF:-1,Ночь
+http://iptv.prosto.tv:7000/ch349/video.m3u8
+#EXTINF:-1,Водопад
+http://iptv.prosto.tv:7000/ch329/video.m3u8
+#EXTINF:-1,Лес
+http://iptv.prosto.tv:7000/ch330/video.m3u8
+#EXTINF:-1,Огонь
+http://iptv.prosto.tv:7000/ch331/video.m3u8
+#EXTINF:-1,Пляж
+http://iptv.prosto.tv:7000/ch332/video.m3u8
+#EXTINF:-1,Тропики
+http://iptv.prosto.tv:7000/ch335/video.m3u8
+#EXTINF:-1,Река
+http://iptv.prosto.tv:7000/ch338/video.m3u8
+#EXTINF:-1,Джунгли
+http://iptv.prosto.tv:7000/ch339/video.m3u8
+#EXTINF:-1,Горы
+http://iptv.prosto.tv:7000/ch340/video.m3u8
+#EXTINF:-1,Озеро
+http://iptv.prosto.tv:7000/ch341/video.m3u8
+#EXTINF:-1,Рыбалка
+http://iptv.prosto.tv:7000/ch344/video.m3u8
+#EXTINF:-1,Бассейн
+http://iptv.prosto.tv:7000/ch345/video.m3u8
+#EXTINF:-1,Флора
+http://iptv.prosto.tv:7000/ch346/video.m3u8
+#EXTINF:-1,Сад
+http://iptv.prosto.tv:7000/ch347/video.m3u8
+#EXTINF:-1,Железная дорога
+http://iptv.prosto.tv:7000/ch348/video.m3u8
+#EXTINF:-1,Парк
+http://iptv.prosto.tv:7000/ch350/video.m3u8
+#EXTINF:-1,СУСПІЛЬНЕ СПОРТ
+http://85.223.221.130:8000/play/a07h
+#EXTINF:-1,Setanta Sports UA HD
+http://85.223.221.130:8000/play/a04f
+#EXTINF:-1,Setanta Sports plus HD UA
+http://85.223.221.130:8000/play/a06k
+#EXTINF:-1,SPORT 1
+http://85.223.221.130:8000/play/a06e
+#EXTINF:-1,SPORT 2
+http://85.223.221.130:8000/play/a04e
+#EXTINF:-1,XSPORT HD
+http://de.kineskop.club/site2/371/1009756_4d769fafe4ae9f48_0_0_fs2.m3u8
+#EXTINF:-1,X-Stream
+http://iptv.prosto.tv:7000/ch313/video.m3u8?secret=cledwwov
+#EXTINF:-1,ПЛЮС ПЛЮС
+http://85.223.221.130:8000/play/a09u
+#EXTINF:-1,PIXEL HD
+http://85.223.221.130:8000/play/a0a6
+#EXTINF:-1,Радіо Люкс FM (Львів)
+https://streamvideo.luxnet.ua/luxlviv/luxlviv.stream/playlist.m3u8
+#EXTINF:-1,Hope FM - Christian youth online radio
+http://185.168.128.79:7777/hope.fm/256
+#EXTINF:-1,ВСЕ ТВ 07.06.24 FAS-TV.COM
+https://iptv.org.ua/wp-content/uploads/2022/01/Moyo-slayd33-shou.mp4
+#EXTINF:-1,ПЕРШИЙ
+https://ext.cdn.nashnet.tv/228.0.2.45/index.m3u8
+#EXTINF:-1,1+1 Марафон
+http://85.223.221.130:8000/play/a09r
+#EXTINF:-1,1+1 International
+http://ott.watch/stream/4LMG17SVYT/105.m3u8
+#EXTINF:-1,1+1 УКРАЇНА
+http://85.223.221.130:8000/play/a09p
+#EXTINF:-1,1+1 Україна
+http://85.223.221.130:8000/play/a09s
+#EXTINF:-1,Два+Два
+http://85.223.221.130:8000/play/a09w
+#EXTINF:-1,ICTV
+http://85.223.221.130:8000/play/a08x
+#EXTINF:-1,ICTV 2
+http://85.223.221.130:8000/play/a092
+#EXTINF:-1,СТБ
+http://85.223.221.130:8000/play/a09q
+#EXTINF:-1,НОВИЙ КАНАЛ
+http://85.223.221.130:8000/play/a08y
+#EXTINF:-1,ТЕТ
+http://85.223.221.130:8000/play/a09t
+#EXTINF:-1,НТН HD
+http://85.223.221.130:8000/play/a0a3
+#EXTINF:-1,Enter Film HD
+http://85.223.221.130:8000/play/a0a7
+#EXTINF:-1,K1 HD
+http://85.223.221.130:8000/play/a0a5
+#EXTINF:-1,ІНТЕР+
+http://85.223.221.130:8000/play/a04i
+#EXTINF:-1,Твій серіал
+http://85.223.221.130:8000/play/a093
+#EXTINF:-1,Бігуді
+http://85.223.221.130:8000/play/a09v
+#EXTINF:-1,KinoSweet UA FUL HD
+http://85.223.221.130:8000/play/a08b
+#EXTINF:-1,KinoSweet UA HD
+http://95.67.12.180:11111
+#EXTINF:-1,Україна
+https://ipv4.bozztv.com/dvrfl07/ushba5/tracks-v1a1/mono.m3u8
+#EXTINF:-1,Україна 2
+https://ipv4.bozztv.com/dvrfl07/ushba12/tracks-v1a1/mono.m3u8
+#EXTINF:-1,ОЦЕ
+http://85.223.221.130:8000/play/a091
+#EXTINF:-1,Kvartal
+http://85.223.221.130:8000/play/a076
+#EXTINF:-1,DIM TV
+http://85.223.221.130:8000/play/a0ab
+#EXTINF:-1,Gags Network HD
+http://95.67.12.82:9069
+#EXTINF:-1,VIASAT KINO ACTION
+http://85.223.221.130:8000/play/a05x
+#EXTINF:-1,VIASAT KINO MEGAHIT
+http://85.223.221.130:8000/play/a08c
+#EXTINF:-1,VIASAT KINO WORLD
+http://85.223.221.130:8000/play/a074
+#EXTINF:-1,VIASAT KINO HD COMEDY
+http://85.223.221.130:8000/play/a06z
+#EXTINF:-1,VIASAT SERIAL
+http://85.223.221.130:8000/play/a072
+#EXTINF:-1,viju+ Comedy
+http://bigline.club:8080/Allgood/m7LkpXsgqbEN/12148
+#EXTINF:-1,viju+ Megahit
+http://bigline.club:8080/Allgood/m7LkpXsgqbEN/12149
+#EXTINF:-1,viju+ Premiere
+http://bigline.club:8080/Allgood/m7LkpXsgqbEN/12150
+#EXTINF:-1,viju+ Serial
+http://bigline.club:8080/Allgood/m7LkpXsgqbEN/14708
+#EXTINF:-1,Viju TV1000
+http://91.205.199.3/tv1000/index.m3u8
+#EXTINF:-1,Viju TV1000 Action
+http://91.205.199.3/tv1000action/index.m3u8
+#EXTINF:-1,Viasat Kino HD
+http://cdnua03.hls.tv/524/hls/8743361621b245838bee193c9ec28322/311/stream.m3u8
+#EXTINF:-1,Viasat Kino Action
+http://cdnua03.hls.tv/524/hls/8743361621b245838bee193c9ec28322/308/stream.m3u8
+#EXTINF:-1,Viasat Kino Megahit HD
+http://cdnua03.hls.tv/524/hls/8743361621b245838bee193c9ec28322/3981/stream.m3u8
+#EXTINF:-1,Viasat World
+http://cdnua03.hls.tv/524/hls/8743361621b245838bee193c9ec28322/4816/stream.m3u8
+#EXTINF:-1,Viasat Kino Comedy
+http://cdnua03.hls.tv/524/hls/8743361621b245838bee193c9ec28322/309/stream.m3u8
+#EXTINF:-1,Kinowood
+http://cdnua03.hls.tv/524/hls/8743361621b245838bee193c9ec28322/4844/stream.m3u8
+#EXTINF:-1,Kinosweet HD
+http://cdnua03.hls.tv/524/hls/8743361621b245838bee193c9ec28322/4876/stream.m3u8
+#EXTINF:-1,Kinoliving
+http://cdnua03.hls.tv/524/hls/8743361621b245838bee193c9ec28322/4805/stream.m3u8
+#EXTINF:-1,Kinowood HD
+http://85.223.221.130:8000/play/a06x
+#EXTINF:-1,Cine+ hit
+http://85.223.221.130:8000/play/a08j
+#EXTINF:-1,Cine+ Legend
+http://85.223.221.130:8000/play/a05e
+#EXTINF:-1,FILM UA DRAMA
+http://85.223.221.130:8000/play/a087
+#EXTINF:-1,CPS ACTION HD
+http://85.223.221.130:8000/play/a032
+#EXTINF:-1,CPS FRESII UA
+http://85.223.221.130:8000/play/a03c
+#EXTINF:-1,KINO 1
+http://85.223.221.130:8000/play/a088
+#EXTINF:-1,Наше улюблене кіно
+http://85.223.221.130:8000/play/a05i
+#EXTINF:-1,Ізмаіл ТВ
+http://cdn10.live-tv.od.ua:8081/izod/izod-abr/playlist.m3u8
+#EXTINF:-1,Flix Snip hd
+http://95.67.12.82:9061
+#EXTINF:-1,Fx HD
+http://85.223.221.130:8000/play/a08d
+#EXTINF:-1,Fox tva* org*ua
+https://stream01.vnet.am/Fox/mono.m3u8
+#EXTINF:-1,FOX Life HD
+http://85.223.221.130:8000/play/a08e
+#EXTINF:-1,Amedia 1 SD
+http://sc.id-tv.kz/A1.m3u8
+#EXTINF:-1,A1
+http://stream01.vnet.am/Channel_128/mono.m3u8
+#EXTINF:-1,Amedia 2 SD
+http://91.205.199.3/amedia2/index.m3u8
+#EXTINF:-1,Amedia hit
+http://sc.id-tv.kz/amedia_hit_hd_34_35.m3u8
+#EXTINF:-1,Amedia Premium
+http://stream01.vnet.am/AmediaPremium/mono.m3u8
+#EXTINF:-1,Индия
+http://stream01.vnet.am/ZeeTV/mono.m3u8
+#EXTINF:-1,RED SD
+http://91.205.199.3/red/index.m3u8
+#EXTINF:-1,SCI-FI SD
+http://91.205.199.3/scifi/index.m3u8
+#EXTINF:-1,black SD
+http://91.205.199.3/black/index.m3u8
+#EXTINF:-1,МАСОН
+http://85.223.221.130:8000/play/a08u
+#EXTINF:-1,1 Автомобільний
+http://85.223.221.130:8000/play/a04w
+#EXTINF:-1,Трофей
+http://85.223.221.130:8000/play/a066
+#EXTINF:-1,Наука
+http://85.223.221.130:8000/play/a064
+#EXTINF:-1,ТЕРА
+http://85.223.221.130:8000/play/a08r
+#EXTINF:-1,Дача
+http://85.223.221.130:8000/play/a07a
+#EXTINF:-1,Рибалка
+http://iptv.prosto.tv:7000/ch344/video.m3u8
+#EXTINF:-1,Sweet
+http://95.67.12.82:9085
+#EXTINF:-1,Сварожичи HD
+http://svarozhichi.cdn-04.cosmonova.net.ua/mobile-app/main/svarozhichi/master.m3u8
+#EXTINF:-1,Discovery Channel HD
+http://stream01.vnet.am/DiscoveryChannel/tracks-v1a2/mono.m3u8
+#EXTINF:-1,ID Investigation Discovery
+http://stream01.vnet.am/InvestigationDiscovery/mono.m3u8
+#EXTINF:-1,ID DISCOVERY
+http://45.159.74.14:80/InvestigationDiscovery/tracks-v1a2/mono.m3u8
+#EXTINF:-1,National Geographic
+http://45.159.74.13:80/NationalGeographic/tracks-v1a1/mono.m3u8
+#EXTINF:-1,National Geographic SD
+http://stream02.vnet.am/NationalGeographic/index.m3u8
+#EXTINF:-1,Animal Planet HD
+http://stream01.vnet.am/AnimalPlanet/tracks-v1a2/mono.m3u8
+#EXTINF:-1,Nat Geo Wild HD
+http://45.159.74.13:80/NatGeoWild/tracks-v1a1/mono.m3u8
+#EXTINF:-1,Суспільне Культура
+http://85.223.221.130:8000/play/a063
+#EXTINF:-1,Суспільне Одеса
+http://85.223.221.130:8000/play/a05k
+#EXTINF:-1,Суспільне Запоріжжя
+https://stream.ztv.zp.ua/hls/live.m3u8
+#EXTINF:-1,Суспільне Крим
+http://193.107.168.59:7005/play/436/index.m3u8
+#EXTINF:-1,Орбiта tva.org.ua
+http://ftp.orbita.dn.ua/hls/orbita.m3u8
+#EXTINF:-1,РЕПОРТЕР
+http://cdn1.live-tv.od.ua:8081/31chod/31chod-abr/31chod/31chod/playlist.m3u8
+#EXTINF:-1,ІТ3
+http://cdn10.live-tv.od.ua:8081/it3od/720p/playlist.m3u8
+#EXTINF:-1,Снятин
+http://93.170.188.90:7781/udp/229.1.2.3:1234
+#EXTINF:-1,Круг (Одеса)
+http://cdn1.live-tv.od.ua:8081/krugod/krugod-abr-lq/playlist.m3u8
+#EXTINF:-1,УНІАН SD
+http://85.223.221.130:8000/play/a09z
+#EXTINF:-1,Армія ТВ SD
+http://85.223.221.130:8000/play/a09j
+#EXTINF:-1,24 Канал SD
+http://85.223.221.130:8000/play/a09y
+#EXTINF:-1,СK 1
+http://cdn10.live-tv.od.ua:8081/sk1zt/sk1zt720p/playlist.m3u8
+#EXTINF:-1,FREEдом
+http://95.67.106.242/mobile-app/main/freedom/master.m3u8
+#EXTINF:-1,FREEDOM
+https://freedom.cdn-01.cosmonova.net.ua/mobile-app/main/freedom/master.m3u8
+#EXTINF:-1,Нове тв
+https://novoe.top/nove_tv.m3u8.jpg?m3u8
+#EXTINF:-1,TVA
+https://iptv.org.ua/wp-content/uploads/2022/01/Moyo-slayd33-shou.mp4
+#EXTINF:-1,Надія/N.K.
+http://nadiya.home-net.com.ua/mob/mystream.m3u8
+#EXTINF:-1,Тернопіль 1
+http://185.53.79.12/ternopil1/index.m3u8?cur=tva.org.ua&key=3i277
+#EXTINF:-1,Тернопiль 1 HD
+http://ott.columbus.te.ua/ternopil1/index.m3u8?cur=tva.org.ua&key=3i277
+#EXTINF:-1,НТК Коломия
+https://stream.ntktv.ua/s/ntk/ntk.m3u8?cur=tva.org.ua&key=3i277
+#EXTINF:-1,ТВА tva*org-ua
+http://hls.cdn.ua/tva.ua_live/_definst_/livestream/playlist.m3u8
+#EXTINF:-1,ТВА tva*in-ua
+http://rtsp.cdn.ua/tva.ua_live/_definst_/livestream/playlist.m3u8
+#EXTINF:-1,ГРОМАДСЬКЕ ІНТЕРАКТИВНЕ ТЕЛЕБАЧЕННЯ (Луцьк)
+https://stream.uagit.tv/gittv.m3u8?cur=tva.org.ua&key=3i277
+#EXTINF:-1,33 канал (Хмельницький)
+https://33news.org/33chanel/live/chunklist_w459617257.m3u8
+#EXTINF:-1,МТМ Запоріжжя
+https://stream.ztv.zp.ua/hls/live.m3u8
+#EXTINF:-1,7 канал tva.org.ua
+http://cdn10.live-tv.od.ua:8081/7tvod/7tvod/playlist.m3u8
+#EXTINF:-1,1 Городский Одеса HD
+http://91.194.79.46:8081/stream1/channel1/playlist.m3u8
+#EXTINF:-1,Чорноморська ТРК
+https://stream.skyvision.com.ua/blackseatv/stream/main/playlist.m3u8
+#EXTINF:-1,Аверс (Луцьк)
+https://avers.pp.ua/hls/efir.m3u8?key=iptv*org*ua
+#EXTINF:-1,Bambarbia TV
+http://cdn1.live-tv.od.ua:8081/bbb/bbbtv-720p/playlist.m3u8
+#EXTINF:-1,Дніпро TV HD
+http://vcdn1.produck.company:1935/out/dtv/playlist.m3u8
+#EXTINF:-1,Балта ТВ HD
+http://194.50.51.34/playlist.m3u8
+#EXTINF:-1,Глас
+http://85.238.112.69:8811/hls_sec/239.0.4.18-.m3u8
+#EXTINF:-1,ТРК Надія - Новий Канал (Первомайский)
+http://178.217.215.57/mob/mystream.m3u8
+#EXTINF:-1,Чернівецький Промінь HD
+http://langate.tv/promin/live_720/index.m3u8
+#EXTINF:-1,СК1 (Житомир)
+http://cdn10.live-tv.od.ua:8081/sk1zt/sk1zt-abr-lq/playlist.m3u8
+#EXTINF:-1,НТК
+http://stream.ntktv.ua/s/ntk/ntk.m3u8
+#EXTINF:-1,ITV (Рівне)
+http://cdn10.live-tv.od.ua:8081/itvrv/abr-lq/playlist.m3u8
+#EXTINF:-1,ITV HD
+http://cdn10.live-tv.od.ua:8081/itvrv/abr/playlist.m3u8
+#EXTINF:-1,ITV
+http://cdn10.live-tv.od.ua:8081/itvrv/720p/playlist.m3u8
+#EXTINF:-1,Сфера ТВ
+http://cdn10.live-tv.od.ua:8081/sferarv/720p/playlist.m3u8
+#EXTINF:-1,М1 HD
+http://85.223.221.130:8000/play/a08z
+#EXTINF:-1,М2 FUL HD
+http://85.223.221.130:8000/play/a090
+#EXTINF:-1,М2 HD
+http://live.m2.tv/hls3/720/stream.m3u8
+#EXTINF:-1,М2
+http://live.m2.tv/hls3/stream.m3u8
+#EXTINF:-1,Loupe TV
+https://d2dw21aq0j0l5c.cloudfront.net/playlist_1920x1080.m3u8
+#EXTINF:-1,Relax iptv.org.ua
+http://185.57.68.33:8091/232/tracks-v1a1/index.m3u8?cur=tva.org.ua&key=3i277
+#EXTINF:-1,Deluxe Lounge HD
+https://stream.ads.ottera.tv/cl/231009cki5o24nsepl2jh7b2eg/1920x1080_5359200_5_f.m3u8
+#EXTINF:-1,Relaxon
+http://176.122.99.7:7000/ch317/video.m3u8
+#EXTINF:-1,Relaxon
+http://iptv.prosto.tv:7000/ch317/video.m3u8
+#EXTINF:-1,Камин
+http://iptv.prosto.tv:7000/ch318/video.m3u8
+#EXTINF:-1,Пейзаж
+http://iptv.prosto.tv:7000/ch343/video.m3u8
+#EXTINF:-1,Space Stream
+http://iptv.prosto.tv:7000/ch314/video.m3u8
+#EXTINF:-1,Про Факт
+http://iptv.prosto.tv:7000/ch315/video.m3u8
+#EXTINF:-1,Зоо
+http://iptv.prosto.tv:7000/ch319/video.m3u8
+#EXTINF:-1,Свет вокруг
+http://iptv.prosto.tv:7000/ch351/video.m3u8
+#EXTINF:-1,Терраса
+https://iptv.prosto.tv/ch336/video.m3u8
+#EXTINF:-1,Горная долина
+http://iptv.prosto.tv:7000/ch302/video.m3u8
+#EXTINF:-1,Просто Украина
+http://iptv.prosto.tv:7000/ch303/video.m3u8
+#EXTINF:-1,Дожди
+http://iptv.prosto.tv:7000/ch304/video.m3u8
+#EXTINF:-1,Подводный мир
+http://iptv.prosto.tv:7000/ch305/video.m3u8
+#EXTINF:-1,Avia Stream
+http://iptv.prosto.tv:7000/ch306/video.m3u8
+#EXTINF:-1,Катастрофы
+http://iptv.prosto.tv:7000/ch312/video.m3u8
+#EXTINF:-1,ЭКО система
+http://iptv.prosto.tv:7000/ch316/video.m3u8
+#EXTINF:-1,Stream City
+http://iptv.prosto.tv:7000/ch321/video.m3u8
+#EXTINF:-1,Аквариум
+http://iptv.prosto.tv:7000/ch325/video.m3u8
+#EXTINF:-1,Комната релакс
+http://iptv.prosto.tv:7000/ch328/video.m3u8
+#EXTINF:-1,Зима
+https://iptv.prosto.tv/ch327/video.m3u8
+#EXTINF:-1,Ночь
+http://iptv.prosto.tv:7000/ch349/video.m3u8
+#EXTINF:-1,Водопад
+http://iptv.prosto.tv:7000/ch329/video.m3u8
+#EXTINF:-1,Лес
+http://iptv.prosto.tv:7000/ch330/video.m3u8
+#EXTINF:-1,Огонь
+http://iptv.prosto.tv:7000/ch331/video.m3u8
+#EXTINF:-1,Пляж
+http://iptv.prosto.tv:7000/ch332/video.m3u8
+#EXTINF:-1,Тропики
+http://iptv.prosto.tv:7000/ch335/video.m3u8
+#EXTINF:-1,Река
+http://iptv.prosto.tv:7000/ch338/video.m3u8
+#EXTINF:-1,Джунгли
+http://iptv.prosto.tv:7000/ch339/video.m3u8
+#EXTINF:-1,Горы
+http://iptv.prosto.tv:7000/ch340/video.m3u8
+#EXTINF:-1,Озеро
+http://iptv.prosto.tv:7000/ch341/video.m3u8
+#EXTINF:-1,Рыбалка
+http://iptv.prosto.tv:7000/ch344/video.m3u8
+#EXTINF:-1,Бассейн
+http://iptv.prosto.tv:7000/ch345/video.m3u8
+#EXTINF:-1,Флора
+http://iptv.prosto.tv:7000/ch346/video.m3u8
+#EXTINF:-1,Сад
+http://iptv.prosto.tv:7000/ch347/video.m3u8
+#EXTINF:-1,Железная дорога
+http://iptv.prosto.tv:7000/ch348/video.m3u8
+#EXTINF:-1,Парк
+http://iptv.prosto.tv:7000/ch350/video.m3u8
+#EXTINF:-1,СУСПІЛЬНЕ СПОРТ
+http://85.223.221.130:8000/play/a07h
+#EXTINF:-1,Setanta Sports UA HD
+http://85.223.221.130:8000/play/a04f
+#EXTINF:-1,Setanta Sports plus HD UA
+http://85.223.221.130:8000/play/a06k
+#EXTINF:-1,SPORT 1
+http://85.223.221.130:8000/play/a06e
+#EXTINF:-1,SPORT 2
+http://85.223.221.130:8000/play/a04e
+#EXTINF:-1,XSPORT HD
+http://de.kineskop.club/site2/371/1009756_4d769fafe4ae9f48_0_0_fs2.m3u8
+#EXTINF:-1,X-Stream
+http://iptv.prosto.tv:7000/ch313/video.m3u8?secret=cledwwov
+#EXTINF:-1,ПЛЮС ПЛЮС
+http://85.223.221.130:8000/play/a09u
+#EXTINF:-1,PIXEL HD
+http://85.223.221.130:8000/play/a0a6
+#EXTINF:-1,Радіо Люкс FM (Львів)
+https://streamvideo.luxnet.ua/luxlviv/luxlviv.stream/playlist.m3u8
+#EXTINF:-1,Hope FM - Christian youth online radio
+http://185.168.128.79:7777/hope.fm/256
