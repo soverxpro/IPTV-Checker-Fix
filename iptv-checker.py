@@ -3,26 +3,24 @@ import subprocess
 import signal
 import sys
 import requests
-from colorama import init, Fore, Style
+from colorama import init, Fore
 import re
 import shutil
-import itertools
-import threading
-import time
 import logging
-
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Initialize colorama
 init(autoreset=True)
 
 # Setup logging
 logger = logging.getLogger()
-logger.setLevel(logging.INFO)  # Leave level DEBUG for more detailed information
+logger.setLevel(logging.INFO)
 handler = logging.StreamHandler(sys.stdout)
 formatter = logging.Formatter('%(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
+# Global variables
 checked_channels = []
 working_channels = []
 total_channels = 0
@@ -30,16 +28,18 @@ working_count = 0
 not_working_count = 0
 timeout_count = 0
 terminate_flag = False
-stop_animation = False
-log_sent = False  # Глобальная переменная для отслеживания отправки строки в лог
+executor = None  # Для управления потоками
 
 def signal_handler(sig, frame):
     global terminate_flag
     terminate_flag = True
-    logger.info(Fore.YELLOW + "Завершение работы...")
+    logger.info(Fore.YELLOW + "\nTerminating...")
+    if executor:
+        logger.info(Fore.YELLOW + "Waiting for threads to finish...")
+        executor.shutdown(wait=True)  # Ожидание завершения всех потоков
     save_results()
     print_summary()
-    raise SystemExit(0)
+    sys.exit(0)  # Мягкое завершение программы
 
 signal.signal(signal.SIGINT, signal_handler)
 
@@ -85,35 +85,20 @@ def check_requests(url, timeout=15):
     except requests.RequestException:
         return False
 
-
 def check_channel(url, timeout=15):
     ffmpeg_result = check_ffmpeg(url, timeout)
     ffprobe_result = check_ffprobe(url, timeout)
     requests_result = check_requests(url, timeout)
-
     return ffmpeg_result and ffprobe_result and requests_result
 
-
-def animate_check(channel_name):
-    for c in itertools.cycle(['|', '/', '-', '\\']):
-        if stop_animation or terminate_flag:
-            break
-        sys.stdout.write(f'\rПроверка {Style.BRIGHT}{channel_name} {c}')
-        sys.stdout.flush()
-        time.sleep(0.1)
-
 def check_channel_with_timeout(channel_name, channel_url, current_index, total_channels, timeout=15):
-    global working_count, not_working_count, timeout_count, stop_animation
+    global working_count, not_working_count, timeout_count
+    # Отображение информации о текущей проверке канала
+    sys.stdout.write(f"\r{Fore.CYAN}Проверка {current_index}/{total_channels} - {channel_name}... ")
+    sys.stdout.flush()
+
     try:
-        stop_animation = False
-        t = threading.Thread(target=animate_check, args=(channel_name,))
-        t.start()
-
         result = check_channel(channel_url, timeout)
-
-        stop_animation = True
-        t.join()
-        sys.stdout.write('\r' + ' ' * 50 + '\r')  # Clear animation line
 
         if result is True:
             status = Fore.GREEN + "Работает!"
@@ -121,95 +106,90 @@ def check_channel_with_timeout(channel_name, channel_url, current_index, total_c
             working_channels.append(channel_url)
             working_count += 1
         elif result == "timeout":
-            status = Fore.RED + "Время проверки истекло!"
+            status = Fore.RED + "Таймаут!"
             timeout_count += 1
         else:
             status = Fore.RED + "Не работает!"
             not_working_count += 1
     except requests.RequestException as e:
-        status = Fore.RED + f"Request error: {e}"
+        status = Fore.RED + f"Ошибка запроса: {e}"
         not_working_count += 1
+
+    # Обновление статуса после проверки канала
+    sys.stdout.write(f"\r{Fore.CYAN}Канал {current_index}/{total_channels} - {channel_name}: {status}\n")
+    sys.stdout.flush()
     return f"Канал {current_index}/{total_channels} - {channel_name}: {status}"
-
-
-def check_playlist_structure(file_path):
-    with open(file_path, 'r', encoding='utf-8') as file:
-        lines = file.readlines()
-
-    has_extm3u = lines[0].strip() == "#EXTM3U"
-    for i in range(1, len(lines)):
-        if lines[i].startswith('#EXTINF:'):
-            if i + 1 < len(lines) and lines[i + 1].startswith('http'):
-                continue
-            else:
-                return False
-    return has_extm3u
-
-def format_m3u(input_file, output_file):
-    with open(input_file, 'r', encoding='utf-8', errors='ignore') as f:
-        data = f.read()
-
-    data = re.sub(r'(#EXTINF)', r'\n\1', data)
-    data = re.sub(r'(http)', r'\n\1', data)
-    data = data.lstrip()
-
-    with open(output_file, 'w', encoding='utf-8', errors='ignore') as f:
-        f.write(data)
 
 def read_playlist(file_path):
     if file_path.startswith('http://') or file_path.startswith('https://'):
         try:
             response = requests.get(file_path)
             response.raise_for_status()
-            lines = response.text.splitlines()
-            return lines
+            return response.text.splitlines()
         except requests.RequestException as e:
-            logger.error(Fore.RED + f"Failed to download playlist: {e}")
+            logger.error(Fore.RED + f"Не удалось скачать плейлист: {e}")
             return []
     else:
         with open(file_path, 'r', encoding='utf-8') as file:
-            lines = file.readlines()
-        return lines
+            return file.readlines()
 
 def count_channels(lines):
-    count = 0
-    for i in range(len(lines)):
-        if lines[i].startswith('#EXTINF:'):
-            count += 1
-    return count
+    return sum(1 for line in lines if line.startswith('#EXTINF:'))
 
 def check_playlist(file_path, timeout=15):
-    global checked_channels, total_channels, terminate_flag, log_sent
-
     lines = read_playlist(file_path)
     if not lines:
         return
 
-    total_channels = count_channels(lines)  # Определяем количество каналов один раз
+    global total_channels, executor
+    total_channels = count_channels(lines)
 
-    global log_sent
-    if not log_sent:
-        logger.debug(Fore.CYAN + f"Чтение плейлиста из файла {file_path}")
-        log_sent = True  # Устанавливаем флаг в True после первого логирования
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        futures = []
+        current_index = 0
+        for i, line in enumerate(lines):
+            if terminate_flag:
+                break  # Прекращаем проверку, если получен сигнал прерывания
+            if line.startswith('#EXTINF:'):
+                current_index += 1
+                channel_name = line.split(',', 1)[-1].strip()
+                if i + 1 < len(lines) and lines[i + 1].startswith('http'):
+                    channel_url = lines[i + 1].strip()
+                    futures.append(executor.submit(check_channel_with_timeout, channel_name, channel_url, current_index, total_channels, timeout))
 
-    current_index = 0
-    for i in range(len(lines)):
-        if terminate_flag:
-            break
-        if lines[i].startswith('#EXTINF:'):
-            current_index += 1
-            channel_name = lines[i].strip().split(',', 1)[-1]
-            if i + 1 < len(lines) and lines[i + 1].startswith('http'):
-                channel_url = lines[i + 1].strip()
-                result = check_channel_with_timeout(channel_name, channel_url, current_index, total_channels, timeout)
-                logger.info(result)
-                checked_channels.append(result)
+        for future in as_completed(futures):
+            if terminate_flag:
+                break  # Останавливаем выполнение оставшихся задач
+            future.result()  # Ждём завершения проверки
 
-    # Сбросим флаг log_sent перед следующим вызовом функции check_playlist
-    log_sent = False
+def remove_duplicates(channels):
+    unique_entries = {}  # Используем словарь для хранения уникальных пар "имя канала: URL"
+    for i in range(0, len(channels), 2):
+        channel_info = channels[i]  # строка с именем канала (например, #EXTINF)
+        channel_url = channels[i + 1]  # строка с URL канала
+
+        # Извлекаем имя канала из строки #EXTINF
+        channel_name = channel_info.split(',', 1)[-1].strip()
+
+        # Проверяем уникальность по имени канала
+        if channel_name not in unique_entries:
+            unique_entries[channel_name] = (channel_info, channel_url)
+        else:
+            # Обновляем запись, если нужно (например, заменяем на последний найденный URL)
+            unique_entries[channel_name] = (channel_info, channel_url)
+
+    # Преобразуем словарь обратно в список
+    unique_channels = []
+    for name, (info, url) in unique_entries.items():
+        unique_channels.append(info)
+        unique_channels.append(url)
+
+    return unique_channels
 
 def save_results(output_file='iptv.m3u'):
     global working_channels
+    # Удаляем дубликаты перед сохранением
+    working_channels = remove_duplicates(working_channels)
     with open(output_file, 'w', encoding='utf-8') as file:
         file.write('#EXTM3U\n')
         for i in range(0, len(working_channels), 2):
@@ -217,74 +197,29 @@ def save_results(output_file='iptv.m3u'):
             file.write(working_channels[i + 1] + '\n')
 
 def print_summary():
-    global total_channels, working_count, not_working_count, timeout_count
     logger.info(Fore.MAGENTA + f"\nВсего проверено каналов: {total_channels}")
     logger.info(Fore.GREEN + f"Рабочих каналов: {working_count}")
     logger.info(Fore.RED + f"Нерабочих каналов: {not_working_count}")
-    logger.info(Fore.YELLOW + f"Зависших каналов: {timeout_count}")
+    logger.info(Fore.YELLOW + f"Каналов с таймаутом: {timeout_count}")
 
 def main():
-    parser = argparse.ArgumentParser(description='IPTV Checker\n Проверка IPTV')
-    parser.add_argument('-p', '--playlist', required=True,
-                        help='Path or URL to the IPTV playlist\n Путь или URL-адрес к списку воспроизведения IPTV')
-    parser.add_argument('--timeout', type=int, default=15,
-                        help='Timeout for checking each channel (in seconds)\n Таймаут проверки каждого канала (в секундах)')
-    parser.add_argument('--output', '-o', default='iptv.m3u',
-                        help='Output file for working channels\n Файл вывода для рабочих каналов')
+    parser = argparse.ArgumentParser(description='IPTV Checker\n')
+    parser.add_argument('-p', '--playlist', required=True, help='Путь или URL к плейлисту IPTV')
+    parser.add_argument('--timeout', type=int, default=15, help='Таймаут для проверки каждого канала (в секундах)')
+    parser.add_argument('--output', '-o', default='iptv.m3u', help='Файл для рабочих каналов')
     args = parser.parse_args()
 
-    try:
-        logger.info(Fore.CYAN + f"Загружен файл плейлиста {args.playlist}")
-
-        # Проверка структуры файла или строки
-        lines = read_playlist(args.playlist)
-        if not lines or not check_playlist_structure_from_lines(lines):
-            logger.error(Fore.RED + f"Структура файла {args.playlist} неправильная!")
-            logger.info(Fore.YELLOW + f"Восстановление структуры в файл formatted_playlist.m3u")
-            if args.playlist.startswith('http://') or args.playlist.startswith('https://'):
-                with open('formatted_playlist.m3u', 'w', encoding='utf-8') as f:
-                    f.write('\n'.join(lines))
-            else:
-                format_m3u(args.playlist, 'formatted_playlist.m3u')
-        else:
-            if args.playlist.startswith('http://') or args.playlist.startswith('https://'):
-                with open('formatted_playlist.m3u', 'w', encoding='utf-8') as f:
-                    f.write('\n'.join(lines))
-            else:
-                shutil.copyfile(args.playlist, 'formatted_playlist.m3u')
-
-        logger.info(Fore.CYAN + "Чтение плейлиста из файла formatted_playlist.m3u")
-        check_playlist('formatted_playlist.m3u', args.timeout)
-        save_results(args.output)
-        print_summary()
-    except KeyboardInterrupt:
-        logger.info(Fore.YELLOW + "Завершение работы...")
-        save_results(args.output)
-        print_summary()
-        sys.exit(0)
-
-
-def check_playlist_structure_from_lines(lines):
-    has_extm3u = lines[0].strip() == "#EXTM3U"
-    for i in range(1, len(lines)):
-        if lines[i].startswith('#EXTINF:'):
-            if i + 1 < len(lines) and lines[i + 1].startswith('http'):
-                continue
-            else:
-                return False
-    return has_extm3u
-
+    logger.info(Fore.CYAN + f"Загрузка плейлиста из {args.playlist}")
+    check_playlist(args.playlist, args.timeout)
+    save_results(args.output)
+    print_summary()
 
 if __name__ == "__main__":
-    # Check if ffmpeg and ffprobe are installed
     if not shutil.which("ffmpeg") or not shutil.which("ffprobe"):
-        logger.error(Fore.RED + "FFmpeg или FFprobe не установлены. Пожалуйста, установите их и попробуйте снова.")
+        logger.error(Fore.RED + "FFmpeg или FFprobe не установлены.")
         sys.exit(1)
 
     try:
         main()
-    except SystemExit as e:
-        pass  # Ignore SystemExit exception if it was explicitly called
-
-    main()
-
+    except SystemExit:
+        pass
