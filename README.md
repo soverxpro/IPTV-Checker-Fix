@@ -48,7 +48,7 @@ python iptv_checker.py --playlist <path_or_url_to_playlist> --timeout <timeout_i
 ### Пример
 
 ```bash
-python iptv_checker.py --playlist http://example.com/playlist.m3u --timeout 20 --output working_channels.m3u
+python iptv-checker.py --playlist http://example.com/playlist.m3u --timeout 20 --output working_channels.m3u
 ```
 
 ### Описание скрипта
