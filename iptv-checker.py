@@ -1,225 +1,348 @@
+import os
+import requests
 import argparse
+import logging
+import concurrent.futures
+from tqdm import tqdm
 import subprocess
+from colorama import Fore, Style, init
+import time
 import signal
 import sys
-import requests
-from colorama import init, Fore
-import re
-import shutil
-import logging
-from concurrent.futures import ThreadPoolExecutor, as_completed
+import threading
+import urllib3
+import shutil  # Добавлено для использования shutil.which
 
-# Initialize colorama
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+# Инициализация colorama для Windows и Linux
 init(autoreset=True)
 
-# Setup logging
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
-handler = logging.StreamHandler(sys.stdout)
-formatter = logging.Formatter('%(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
+# Логирование для дебага
+logging.basicConfig(filename='iptv_check.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Global variables
-checked_channels = []
-working_channels = []
-total_channels = 0
-working_count = 0
-not_working_count = 0
-timeout_count = 0
-terminate_flag = False
-executor = None  # Для управления потоками
+
+# Статистика каналов с использованием класса
+class Stats:
+    def __init__(self):
+        self.working = 0
+        self.failed = 0
+        self.timeout = 0
+        self.skipped = 0
+
+    def log_summary(self):
+        total = self.working + self.failed + self.timeout + self.skipped
+        logging.info(f"=== Summary ===")
+        logging.info(f"Total channels: {total}")
+        if total > 0:
+            logging.info(f"Working: {self.working} ({self.working / total * 100:.2f}%)")
+            logging.info(f"Failed: {self.failed} ({self.failed / total * 100:.2f}%)")
+            logging.info(f"Timeouts: {self.timeout} ({self.timeout / total * 100:.2f}%)")
+            logging.info(f"Skipped: {self.skipped} ({self.skipped / total * 100:.2f}%)")
+        else:
+            logging.info("No channels processed.")
+
+    def print_summary(self):
+        total = self.working + self.failed + self.timeout + self.skipped
+        print(f"\n{Fore.YELLOW}=== Statistics ==={Style.RESET_ALL}")
+        print(
+            f"{Fore.GREEN}Working channels added: {self.working} ({self.working / total * 100:.2f}%)" if total > 0 else "No channels processed.")
+        print(
+            f"{Fore.RED}Failed channels removed: {self.failed} ({self.failed / total * 100:.2f}%)" if total > 0 else "")
+        print(f"{Fore.BLUE}Timeouts: {self.timeout} ({self.timeout / total * 100:.2f}%)" if total > 0 else "")
+        print(
+            f"{Fore.YELLOW}Skipped channels: {self.skipped} ({self.skipped / total * 100:.2f}%){Style.RESET_ALL}" if total > 0 else "")
+
+
+stats = Stats()
+RETRY_COUNT = 1
+
+# Путь к файлу пропущенных каналов
+SKIPPED_FILE_PATH = 'other/skipped.txt'
+os.makedirs(os.path.dirname(SKIPPED_FILE_PATH), exist_ok=True)
+
+lock = threading.Lock()
+
 
 def signal_handler(sig, frame):
-    global terminate_flag
-    terminate_flag = True
-    logger.info(Fore.YELLOW + "\nTerminating...")
-    if executor:
-        logger.info(Fore.YELLOW + "Waiting for threads to finish...")
-        executor.shutdown(wait=True)  # Ожидание завершения всех потоков
-    save_results()
-    print_summary()
-    sys.exit(0)  # Мягкое завершение программы
+    # Обработчик сигналов для корректного завершения работы программы при прерывании (например, Ctrl+C).
+
+    print("\nGracefully shutting down...")
+    sys.exit(0)
+
 
 signal.signal(signal.SIGINT, signal_handler)
 
-def check_ffmpeg(url, timeout=15):
-    try:
-        result = subprocess.run(
-            ["ffmpeg", "-i", url, "-t", str(timeout), "-v", "error", "-f", "null", "-"],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE
-        )
-        stderr_output = result.stderr.decode()
-        if result.returncode == 0:
-            return True
-        if "Server returned 404 Not Found" in stderr_output or "Invalid data found" in stderr_output:
-            logger.error(Fore.RED + f"FFmpeg error: {stderr_output}")
-            return False
-        return True
-    except subprocess.TimeoutExpired:
-        return "timeout"
-    except subprocess.SubprocessError as e:
-        logger.error(Fore.RED + f"FFmpeg SubprocessError: {e}")
-        return False
 
-def check_ffprobe(url, timeout=15):
-    try:
-        result = subprocess.run(
-            ["ffprobe", url],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=timeout
-        )
-        stderr_output = result.stderr.decode('utf-8', errors='replace')
-        if "Input/output error" in stderr_output:
-            return False
-        return result.returncode == 0
-    except subprocess.TimeoutExpired:
-        return "timeout"
-    except subprocess.SubprocessError as e:
-        logger.error(Fore.RED + f"FFprobe SubprocessError: {e}")
-        return False
+def check_dependencies():
+    # Проверка наличия ffmpeg с помощью shutil.which
+    # Проверяет наличие необходимых зависимостей: ffmpeg и requests.
+    # Если ffmpeg не установлен или не найден, программа завершится с ошибкой.
+    # Если пакет requests не установлен, программа завершится с ошибкой.
+    ffmpeg_path = shutil.which('ffmpeg')
 
-def check_requests(url, timeout=15):
-    try:
-        response = requests.head(url, timeout=timeout)
-        return response.status_code == 200
-    except requests.RequestException:
-        return False
-
-def check_channel(url, timeout=15):
-    ffmpeg_result = check_ffmpeg(url, timeout)
-    ffprobe_result = check_ffprobe(url, timeout)
-    requests_result = check_requests(url, timeout)
-    return ffmpeg_result and ffprobe_result and requests_result
-
-def check_channel_with_timeout(channel_name, channel_url, current_index, total_channels, timeout=15):
-    global working_count, not_working_count, timeout_count
-    # Отображение информации о текущей проверке канала
-    sys.stdout.write(f"\r{Fore.CYAN}Проверка {current_index}/{total_channels} - {channel_name}... ")
-    sys.stdout.flush()
-
-    try:
-        result = check_channel(channel_url, timeout)
-
-        if result is True:
-            status = Fore.GREEN + "Работает!"
-            working_channels.append(f'#EXTINF:-1,{channel_name}')
-            working_channels.append(channel_url)
-            working_count += 1
-        elif result == "timeout":
-            status = Fore.RED + "Таймаут!"
-            timeout_count += 1
-        else:
-            status = Fore.RED + "Не работает!"
-            not_working_count += 1
-    except requests.RequestException as e:
-        status = Fore.RED + f"Ошибка запроса: {e}"
-        not_working_count += 1
-
-    # Обновление статуса после проверки канала
-    sys.stdout.write(f"\r{Fore.CYAN}Канал {current_index}/{total_channels} - {channel_name}: {status}\n")
-    sys.stdout.flush()
-    return f"Канал {current_index}/{total_channels} - {channel_name}: {status}"
-
-def read_playlist(file_path):
-    if file_path.startswith('http://') or file_path.startswith('https://'):
-        try:
-            response = requests.get(file_path)
-            response.raise_for_status()
-            return response.text.splitlines()
-        except requests.RequestException as e:
-            logger.error(Fore.RED + f"Не удалось скачать плейлист: {e}")
-            return []
+    if ffmpeg_path is None:
+        print(f"{Fore.RED}ffmpeg не установлен или не найден в PATH!{Style.RESET_ALL}")
+        sys.exit(1)
     else:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            return file.readlines()
+        try:
+            subprocess.run([ffmpeg_path, '-version'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+            print(f"{Fore.GREEN}ffmpeg найден по пути: {ffmpeg_path}{Style.RESET_ALL}")
+        except subprocess.CalledProcessError:
+            print(f"{Fore.RED}Ошибка при попытке выполнить ffmpeg!{Style.RESET_ALL}")
+            sys.exit(1)
 
-def count_channels(lines):
-    return sum(1 for line in lines if line.startswith('#EXTINF:'))
-
-def check_playlist(file_path, timeout=15):
-    lines = read_playlist(file_path)
-    if not lines:
-        return
-
-    global total_channels, executor
-    total_channels = count_channels(lines)
-
-    with ThreadPoolExecutor(max_workers=10) as executor:
-        futures = []
-        current_index = 0
-        for i, line in enumerate(lines):
-            if terminate_flag:
-                break  # Прекращаем проверку, если получен сигнал прерывания
-            if line.startswith('#EXTINF:'):
-                current_index += 1
-                channel_name = line.split(',', 1)[-1].strip()
-                if i + 1 < len(lines) and lines[i + 1].startswith('http'):
-                    channel_url = lines[i + 1].strip()
-                    futures.append(executor.submit(check_channel_with_timeout, channel_name, channel_url, current_index, total_channels, timeout))
-
-        for future in as_completed(futures):
-            if terminate_flag:
-                break  # Останавливаем выполнение оставшихся задач
-            future.result()  # Ждём завершения проверки
-
-def remove_duplicates(channels):
-    unique_entries = {}  # Используем словарь для хранения уникальных пар "имя канала: URL"
-    for i in range(0, len(channels), 2):
-        channel_info = channels[i]  # строка с именем канала (например, #EXTINF)
-        channel_url = channels[i + 1]  # строка с URL канала
-
-        # Извлекаем имя канала из строки #EXTINF
-        channel_name = channel_info.split(',', 1)[-1].strip()
-
-        # Проверяем уникальность по имени канала
-        if channel_name not in unique_entries:
-            unique_entries[channel_name] = (channel_info, channel_url)
-        else:
-            # Обновляем запись, если нужно (например, заменяем на последний найденный URL)
-            unique_entries[channel_name] = (channel_info, channel_url)
-
-    # Преобразуем словарь обратно в список
-    unique_channels = []
-    for name, (info, url) in unique_entries.items():
-        unique_channels.append(info)
-        unique_channels.append(url)
-
-    return unique_channels
-
-def save_results(output_file='iptv.m3u'):
-    global working_channels
-    # Удаляем дубликаты перед сохранением
-    working_channels = remove_duplicates(working_channels)
-    with open(output_file, 'w', encoding='utf-8') as file:
-        file.write('#EXTM3U\n')
-        for i in range(0, len(working_channels), 2):
-            file.write(working_channels[i] + '\n')
-            file.write(working_channels[i + 1] + '\n')
-
-def print_summary():
-    logger.info(Fore.MAGENTA + f"\nВсего проверено каналов: {total_channels}")
-    logger.info(Fore.GREEN + f"Рабочих каналов: {working_count}")
-    logger.info(Fore.RED + f"Нерабочих каналов: {not_working_count}")
-    logger.info(Fore.YELLOW + f"Каналов с таймаутом: {timeout_count}")
-
-def main():
-    parser = argparse.ArgumentParser(description='IPTV Checker\n')
-    parser.add_argument('-p', '--playlist', required=True, help='Путь или URL к плейлисту IPTV')
-    parser.add_argument('--timeout', type=int, default=15, help='Таймаут для проверки каждого канала (в секундах)')
-    parser.add_argument('--output', '-o', default='iptv.m3u', help='Файл для рабочих каналов')
-    args = parser.parse_args()
-
-    logger.info(Fore.CYAN + f"Загрузка плейлиста из {args.playlist}")
-    check_playlist(args.playlist, args.timeout)
-    save_results(args.output)
-    print_summary()
-
-if __name__ == "__main__":
-    if not shutil.which("ffmpeg") or not shutil.which("ffprobe"):
-        logger.error(Fore.RED + "FFmpeg или FFprobe не установлены.")
+    # Проверка других зависимостей при необходимости
+    try:
+        import requests
+    except ImportError:
+        print(f"{Fore.RED}Пакет requests не установлен!{Style.RESET_ALL}")
         sys.exit(1)
 
-    try:
-        main()
-    except SystemExit:
-        pass
+
+# Кэш для хранения результатов проверки
+cache = {}
+
+
+def check_stream(url, channel_name, headers=None, ffmpeg_timeout=25):
+    # Проверяет поток по URL.
+    # Сначала выполняется HEAD-запрос, чтобы проверить доступность URL.
+    # Затем используется ffmpeg для проверки работоспособности потока.
+    # Результаты кэшируются для улучшения производительности.
+
+    if url in cache:
+        return cache[url]
+
+    for attempt in range(RETRY_COUNT + 1):
+        try:
+            logging.debug(
+                f"Checking stream: {channel_name} ({url}) with headers: {headers}) - Attempt {attempt + 1}")
+
+            if url.startswith('http://') or url.startswith('https://'):
+                response = requests.head(url, headers=headers, timeout=15, verify=False)
+                if response.status_code != 200:
+                    stats.failed += 1
+                    cache[url] = (False, f"Invalid status code: {response.status_code}")
+                    return False, f"Invalid status code: {response.status_code}"
+
+                logging.debug(f"HEAD request successful for {url}, proceeding to ffmpeg check")
+
+            ffmpeg_command = ['ffmpeg', '-i', url, '-t', '5', '-f', 'null', '-']
+            try:
+                result = subprocess.run(ffmpeg_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                        timeout=ffmpeg_timeout)
+                if result.returncode == 0:
+                    stats.working += 1
+                    cache[url] = (True, None)
+                    return True, None
+                else:
+                    stats.failed += 1
+                    cache[url] = (False, "Stream does not work")
+                    return False, "Stream does not work"
+            except subprocess.TimeoutExpired:
+                logging.error(f"ffmpeg timeout for {channel_name} (attempt {attempt + 1})")
+                stats.timeout += 1
+                if attempt == RETRY_COUNT:
+                    cache[url] = (False, "ffmpeg timeout")
+                    return False, "ffmpeg timeout"
+
+        except requests.exceptions.Timeout:
+            logging.error(f"Timeout error for {channel_name} (attempt {attempt + 1})")
+            stats.timeout += 1
+            if attempt == RETRY_COUNT:
+                cache[url] = (False, "Request timeout")
+                return False, "Request timeout"
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Request error for {channel_name} (attempt {attempt + 1}): {e}")
+            simplified_error = simplify_error(str(e))
+            if attempt == RETRY_COUNT:
+                stats.failed += 1
+                cache[url] = (False, simplified_error)
+                return False, simplified_error
+        except Exception as e:
+            logging.error(f"General error for {channel_name}: {e}")
+            if attempt == RETRY_COUNT:
+                stats.failed += 1
+                cache[url] = (False, "General error")
+                return False, "General error"
+
+
+def simplify_error(error_message):
+    # Упрощает сообщение об ошибке, заменяя стандартные ошибки на более понятные сообщения.
+
+    error_map = {
+        "No connection adapters": "No connection!",
+        "Timeout": "Request timeout",
+        "403 Forbidden": "Access forbidden (403)"
+    }
+    for error, message in error_map.items():
+        if error in error_message:
+            return message
+    return "Request error"
+
+
+def get_unique_filename(directory, filename):
+    # Генерирует уникальное имя файла, добавляя числовой суффикс, если файл с таким именем уже существует.
+
+    base, ext = os.path.splitext(filename)
+    new_filename = filename
+    for i in range(1, 101):
+        if not os.path.exists(os.path.join(directory, new_filename)):
+            break
+        new_filename = f"{base}_{i}{ext}"
+    return new_filename
+
+
+def add_extm3u_line(content):
+    # Добавляет строку "#EXTM3U" в начало содержимого плейлиста.
+    return "#EXTM3U url-tvg=\"http://iptvx.one/epg/epg.xml.gz\"\n" + content
+
+
+def process_playlist(playlist, save_file, num_threads, ffmpeg_timeout):
+    # Проверка зависимостей
+    check_dependencies()
+
+    # Если путь для сохранения файла не задан, то создаем его автоматически
+    if not save_file:
+        save_file = os.path.join('output', get_unique_filename('output', 'default.m3u'))
+
+    # Загружаем плейлист, если это URL, или читаем из файла, если это локальный путь
+    if playlist.startswith('http'):
+        try:
+            content = requests.get(playlist).text
+        except requests.RequestException as e:
+            logging.error(f"Failed to download playlist: {e}")
+            sys.exit(1)
+    else:
+        try:
+            with open(playlist, 'r') as f:
+                content = f.read()
+        except FileNotFoundError:
+            logging.error(f"File {playlist} not found")
+            sys.exit(1)
+        except IOError as e:
+            logging.error(f"Error reading file {playlist}: {e}")
+            sys.exit(1)
+
+    # Разбиваем содержимое на строки
+    lines = content.splitlines()
+    updated_lines = []
+
+    # Используем ThreadPoolExecutor для многопоточной проверки потоков
+    with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
+        future_to_url = {}
+        num_channels = len([line for line in lines if line.startswith("#EXTINF")])
+        pbar = tqdm(total=num_channels, desc="Checking channels", ncols=100, colour="green")
+
+        # Проверяем каждый канал
+        for i, line in enumerate(lines):
+            if line.startswith("#EXTINF"):
+                if i + 1 < len(lines) and lines[i + 1].startswith('http'):
+                    url = lines[i + 1]
+                    channel_name = line.split(",")[-1]
+                    headers = {}
+                    future = executor.submit(check_stream, url, channel_name, headers, ffmpeg_timeout)
+                    future_to_url[future] = (line, url)
+
+        try:
+            # Обрабатываем результаты проверки каналов
+            for future in concurrent.futures.as_completed(future_to_url):
+                extinf_line, url = future_to_url[future]
+                try:
+                    success, error = future.result()
+                    if success:
+                        updated_lines.append(extinf_line)
+                        updated_lines.append(url)
+                        print(f"{Fore.GREEN}[SUCCESS] {extinf_line.split(',')[-1]}{Style.RESET_ALL}")
+                    else:
+                        print(f"{Fore.RED}[FAIL] {extinf_line.split(',')[-1]} - {error}{Style.RESET_ALL}")
+                        logging.error(f"Failed to play {url}: {error}")
+                except concurrent.futures.TimeoutError:
+                    with lock:
+                        print(f"{Fore.YELLOW}[SKIPPED] {extinf_line.split(',')[-1]} - Took too long{Style.RESET_ALL}")
+                        stats.skipped += 1
+                        with open(SKIPPED_FILE_PATH, 'a') as f:
+                            f.write(f"{extinf_line}\n{url}\n")
+                pbar.update(1)
+
+        except concurrent.futures.TimeoutError:
+            print(f"{Fore.RED}Processing took too long!{Style.RESET_ALL}")
+
+        finally:
+            pbar.close()
+
+    # После всех проверок добавляем #EXTM3U в начало обновленного плейлиста
+    updated_content = add_extm3u_line("\n".join(updated_lines))
+
+    # Сохраняем обновленный плейлист
+    with open(save_file, 'w') as f:
+        f.write(updated_content + "\n")
+
+    # Выводим и логируем статистику
+    print(f"\n{Fore.CYAN}Playlist saved to {save_file}{Style.RESET_ALL}")
+    stats.log_summary()
+    stats.print_summary()
+
+def dry_run_mode():
+    """Проводит сухую проверку, не обращаясь к реальным потокам."""
+    print(f"{Fore.CYAN}Dry run mode enabled{Style.RESET_ALL}")
+    for _ in range(5):
+        print(f"{Fore.GREEN}Checking stream... Simulated success{Style.RESET_ALL}")
+
+def process_playlist(playlist, save_file, num_threads, ffmpeg_timeout, dry_run=False):
+    check_dependencies()
+    if dry_run:
+        dry_run_mode()
+        return
+
+def process_files_in_directory(input_dir, output_dir, num_threads, ffmpeg_timeout):
+
+    # Обрабатывает все плейлисты в указанной директории.
+    # Для каждого файла плейлиста вызывает функцию process_playlist.
+
+    input_files = [f for f in os.listdir(input_dir) if f.endswith('.m3u') or f.endswith('.m3u8')]
+
+    # Лог количества файлов
+    logging.info(f"Found {len(input_files)} playlists in directory.")
+
+    for playlist in input_files:
+        input_path = os.path.join(input_dir, playlist)
+        save_path = os.path.join(output_dir, get_unique_filename(output_dir, playlist))
+
+        logging.info(f"Processing file: {input_path}")
+
+        stats = Stats()  # Создаем новый объект Stats для каждого файла
+
+        process_playlist(input_path, save_path, num_threads, ffmpeg_timeout)
+
+        logging.info(f"Finished processing file: {input_path}")
+
+
+def main():
+    # Основная функция, которая парсит аргументы командной строки и вызывает соответствующие функции.
+    parser = argparse.ArgumentParser(description="IPTV playlist checker")
+    parser.add_argument('-p', '--playlist', help="URL or path to the playlist file")
+    parser.add_argument('-s', '--save', help="Path to save the checked playlist")
+    parser.add_argument('-t', '--threads', type=int, default=1, help="Number of threads for checking streams")
+    parser.add_argument('-ft', '--ffmpeg-timeout', type=int, default=15, help="Timeout for ffmpeg (in seconds)")
+    parser.add_argument('-file', action="store_true", help="Process all playlist files from the input folder")
+    parser.add_argument('--dry-run', action="store_true", help="Enable dry run mode (no actual stream checking)")
+
+    args = parser.parse_args()
+
+    # Если включен режим "сухого запуска", пропускаем проверку на плейлист
+    if args.dry_run:
+        process_playlist(None, None, args.threads, args.ffmpeg_timeout, dry_run=True)
+    elif args.file:
+        input_dir = 'input'
+        output_dir = 'output'
+        os.makedirs(output_dir, exist_ok=True)
+        process_files_in_directory(input_dir, output_dir, args.threads, args.ffmpeg_timeout)
+    else:
+        if not args.playlist:
+            parser.error("Playlist URL or file path is required unless using -file option.")
+        process_playlist(args.playlist, args.save, args.threads, args.ffmpeg_timeout)
+
+if __name__ == '__main__':
+    main()
+
