@@ -65,8 +65,6 @@ lock = threading.Lock()
 
 
 def signal_handler(sig, frame):
-    # Обработчик сигналов для корректного завершения работы программы при прерывании (например, Ctrl+C).
-
     print("\nGracefully shutting down...")
     sys.exit(0)
 
@@ -76,9 +74,6 @@ signal.signal(signal.SIGINT, signal_handler)
 
 def check_dependencies():
     # Проверка наличия ffmpeg с помощью shutil.which
-    # Проверяет наличие необходимых зависимостей: ffmpeg и requests.
-    # Если ffmpeg не установлен или не найден, программа завершится с ошибкой.
-    # Если пакет requests не установлен, программа завершится с ошибкой.
     ffmpeg_path = shutil.which('ffmpeg')
 
     if ffmpeg_path is None:
@@ -105,11 +100,6 @@ cache = {}
 
 
 def check_stream(url, channel_name, headers=None, ffmpeg_timeout=25):
-    # Проверяет поток по URL.
-    # Сначала выполняется HEAD-запрос, чтобы проверить доступность URL.
-    # Затем используется ffmpeg для проверки работоспособности потока.
-    # Результаты кэшируются для улучшения производительности.
-
     if url in cache:
         return cache[url]
 
@@ -168,8 +158,6 @@ def check_stream(url, channel_name, headers=None, ffmpeg_timeout=25):
 
 
 def simplify_error(error_message):
-    # Упрощает сообщение об ошибке, заменяя стандартные ошибки на более понятные сообщения.
-
     error_map = {
         "No connection adapters": "No connection!",
         "Timeout": "Request timeout",
@@ -182,8 +170,6 @@ def simplify_error(error_message):
 
 
 def get_unique_filename(directory, filename):
-    # Генерирует уникальное имя файла, добавляя числовой суффикс, если файл с таким именем уже существует.
-
     base, ext = os.path.splitext(filename)
     new_filename = filename
     for i in range(1, 101):
@@ -194,19 +180,14 @@ def get_unique_filename(directory, filename):
 
 
 def add_extm3u_line(content):
-    # Добавляет строку "#EXTM3U" в начало содержимого плейлиста.
     return "#EXTM3U url-tvg=\"http://iptvx.one/epg/epg.xml.gz\"\n" + content
 
 
 def process_playlist(playlist, save_file, num_threads, ffmpeg_timeout):
-    # Проверка зависимостей
     check_dependencies()
-
-    # Если путь для сохранения файла не задан, то создаем его автоматически
     if not save_file:
         save_file = os.path.join('output', get_unique_filename('output', 'default.m3u'))
 
-    # Загружаем плейлист, если это URL, или читаем из файла, если это локальный путь
     if playlist.startswith('http'):
         try:
             content = requests.get(playlist).text
@@ -224,17 +205,15 @@ def process_playlist(playlist, save_file, num_threads, ffmpeg_timeout):
             logging.error(f"Error reading file {playlist}: {e}")
             sys.exit(1)
 
-    # Разбиваем содержимое на строки
+    content = add_extm3u_line(content)
     lines = content.splitlines()
     updated_lines = []
 
-    # Используем ThreadPoolExecutor для многопоточной проверки потоков
     with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
         future_to_url = {}
         num_channels = len([line for line in lines if line.startswith("#EXTINF")])
         pbar = tqdm(total=num_channels, desc="Checking channels", ncols=100, colour="green")
 
-        # Проверяем каждый канал
         for i, line in enumerate(lines):
             if line.startswith("#EXTINF"):
                 if i + 1 < len(lines) and lines[i + 1].startswith('http'):
@@ -245,7 +224,6 @@ def process_playlist(playlist, save_file, num_threads, ffmpeg_timeout):
                     future_to_url[future] = (line, url)
 
         try:
-            # Обрабатываем результаты проверки каналов
             for future in concurrent.futures.as_completed(future_to_url):
                 extinf_line, url = future_to_url[future]
                 try:
@@ -271,35 +249,16 @@ def process_playlist(playlist, save_file, num_threads, ffmpeg_timeout):
         finally:
             pbar.close()
 
-    # После всех проверок добавляем #EXTM3U в начало обновленного плейлиста
-    updated_content = add_extm3u_line("\n".join(updated_lines))
-
-    # Сохраняем обновленный плейлист
     with open(save_file, 'w') as f:
-        f.write(updated_content + "\n")
+        for line in updated_lines:
+            f.write(line + "\n")
 
-    # Выводим и логируем статистику
     print(f"\n{Fore.CYAN}Playlist saved to {save_file}{Style.RESET_ALL}")
     stats.log_summary()
     stats.print_summary()
 
-def dry_run_mode():
-    """Проводит сухую проверку, не обращаясь к реальным потокам."""
-    print(f"{Fore.CYAN}Dry run mode enabled{Style.RESET_ALL}")
-    for _ in range(5):
-        print(f"{Fore.GREEN}Checking stream... Simulated success{Style.RESET_ALL}")
-
-def process_playlist(playlist, save_file, num_threads, ffmpeg_timeout, dry_run=False):
-    check_dependencies()
-    if dry_run:
-        dry_run_mode()
-        return
 
 def process_files_in_directory(input_dir, output_dir, num_threads, ffmpeg_timeout):
-
-    # Обрабатывает все плейлисты в указанной директории.
-    # Для каждого файла плейлиста вызывает функцию process_playlist.
-
     input_files = [f for f in os.listdir(input_dir) if f.endswith('.m3u') or f.endswith('.m3u8')]
 
     # Лог количества файлов
@@ -311,7 +270,8 @@ def process_files_in_directory(input_dir, output_dir, num_threads, ffmpeg_timeou
 
         logging.info(f"Processing file: {input_path}")
 
-        stats = Stats()  # Создаем новый объект Stats для каждого файла
+        # Сброс статистики для каждого плейлиста, если требуется отдельная статистика
+        # stats = Stats()  # Раскомментируйте, если хотите сбрасывать статистику для каждого файла
 
         process_playlist(input_path, save_path, num_threads, ffmpeg_timeout)
 
@@ -319,21 +279,15 @@ def process_files_in_directory(input_dir, output_dir, num_threads, ffmpeg_timeou
 
 
 def main():
-    # Основная функция, которая парсит аргументы командной строки и вызывает соответствующие функции.
     parser = argparse.ArgumentParser(description="IPTV playlist checker")
     parser.add_argument('-p', '--playlist', help="URL or path to the playlist file")
     parser.add_argument('-s', '--save', help="Path to save the checked playlist")
     parser.add_argument('-t', '--threads', type=int, default=1, help="Number of threads for checking streams")
     parser.add_argument('-ft', '--ffmpeg-timeout', type=int, default=15, help="Timeout for ffmpeg (in seconds)")
     parser.add_argument('-file', action="store_true", help="Process all playlist files from the input folder")
-    parser.add_argument('--dry-run', action="store_true", help="Enable dry run mode (no actual stream checking)")
-
     args = parser.parse_args()
 
-    # Если включен режим "сухого запуска", пропускаем проверку на плейлист
-    if args.dry_run:
-        process_playlist(None, None, args.threads, args.ffmpeg_timeout, dry_run=True)
-    elif args.file:
+    if args.file:
         input_dir = 'input'
         output_dir = 'output'
         os.makedirs(output_dir, exist_ok=True)
@@ -343,6 +297,6 @@ def main():
             parser.error("Playlist URL or file path is required unless using -file option.")
         process_playlist(args.playlist, args.save, args.threads, args.ffmpeg_timeout)
 
+
 if __name__ == '__main__':
     main()
-
