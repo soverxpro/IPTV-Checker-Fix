@@ -1,17 +1,7 @@
-import os
-import requests
-import argparse
-import logging
-import concurrent.futures
+import os, requests, argparse, logging, concurrent.futures, subprocess, time, signal, sys, threading, urllib3, shutil
 from tqdm import tqdm
-import subprocess
 from colorama import Fore, Style, init
-import time
-import signal
-import sys
-import threading
-import urllib3
-import shutil  # Добавлено для использования shutil.which
+
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
