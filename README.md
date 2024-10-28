@@ -1,6 +1,6 @@
 ---
 
-![IPTV-Checker!.png](IPTV-Checker!.png)
+![other/IPTV-Checker!.png](IPTV-Checker!.png)
 
 ---
 
@@ -77,25 +77,25 @@ pip install requests tqdm colorama
 1. **Проверка плейлиста из URL с 4 потоками:**
 
    ```bash
-   python iptv_check.py -p http://example.com/playlist.m3u -t 4
+   python iptv-check.py -p http://example.com/playlist.m3u -t 4
    ```
 
 2. **Проверка локального файла плейлиста с сохранением результата:**
 
    ```bash
-   python iptv_check.py -p /path/to/playlist.m3u -s /path/to/save/checked_playlist.m3u
+   python iptv-check.py -p /path/to/playlist.m3u -s /path/to/save/checked_playlist.m3u
    ```
 
 3. **Проверка всех плейлистов в директории `input`:**
 
    ```bash
-   python iptv_check.py -file -t 3
+   python iptv-check.py -file -t 3
    ```
 
 4. **Запуск в режиме "сухого теста":**
 
    ```bash
-   python iptv_check.py --dry-run
+   python iptv-check.py --dry-run
    ```
 
 ### Логи и статистика
