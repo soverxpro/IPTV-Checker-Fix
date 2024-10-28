@@ -1,6 +1,6 @@
 ---
 
-![other/IPTV-Checker!.png](IPTV-Checker!.png)
+![other/IPTV-Checker!.png](other/IPTV-Checker!.png)
 
 ---
 
