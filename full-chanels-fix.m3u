@@ -1,3 +1,4 @@
+#EXTM3U url-tvg="http://iptvx.one/epg/epg.xml.gz"
 #EXTINF:-1 group-title="KINOZAL BCU", BCU Premiere
 http://str30.tv/3078/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
 #EXTINF:-1 group-title="KINOZAL BCU", BCU Кинозал Premiere 1 HD
