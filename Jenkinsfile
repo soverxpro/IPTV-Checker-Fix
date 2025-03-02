@@ -1,18 +1,16 @@
 pipeline {
     agent any
     
-    // Опции сборки
     options {
-        disableConcurrentBuilds() // Запрещаем параллельные запуски
-        buildDiscarder(logRotator(numToKeepStr: '10')) // Храним 10 последних сборок
-        timeout(time: 240, unit: 'MINUTES') // Ограничение времени выполнения
-        retry(2) // Повтор при неудаче
-        timestamps() // Добавляем метки времени в лог
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        timeout(time: 240, unit: 'MINUTES') // Изменено на 240 минут по вашему запросу
+        retry(2)
+        timestamps()
     }
     
-    // Триггеры запуска
     triggers {
-        cron('0 0 * * *') // Ежедневно в полночь
+        cron('0 0 * * *')
     }
     
     environment {
@@ -20,7 +18,7 @@ pipeline {
         REPO_URL = 'https://github.com/soverxpro/IPTV-Checker-Fix.git'
         PLAYLIST_URL = 'https://iptv.org.ua/iptv/avto.m3u8'
         OUTPUT_FILE = 'iptv.m3u'
-        EMAIL_TO = 'soverx.online@gmail.com' // Укажите ваш email
+        EMAIL_TO = 'soverx.online@gmail.com' // Ваш email
     }
     
     stages {
@@ -29,7 +27,9 @@ pipeline {
                 sh '''
                     apt-get update -qq
                     apt-get install -y -qq python3 python3-venv python3-pip ffmpeg git
-                    python3 -m pip install --upgrade pip
+                    # Создаем виртуальное окружение сразу
+                    python3 -m venv /tmp/venv
+                    /tmp/venv/bin/pip install --upgrade pip
                 '''
             }
         }
@@ -44,9 +44,8 @@ pipeline {
                         ])
                         
                         sh '''
-                            python3 -m venv venv
-                            . venv/bin/activate
-                            pip install -r requirements.txt
+                            # Используем виртуальное окружение из /tmp/venv
+                            /tmp/venv/bin/pip install -r requirements.txt
                         '''
                     } catch (Exception e) {
                         error "Setup failed: ${e.message}"
@@ -60,8 +59,7 @@ pipeline {
                 script {
                     def startTime = new Date()
                     sh '''
-                        . venv/bin/activate
-                        python3 iptv-checker.py -p "${PLAYLIST_URL}" \
+                        /tmp/venv/bin/python iptv-checker.py -p "${PLAYLIST_URL}" \
                             -s "${OUTPUT_FILE}" \
                             -t 4 \
                             -ft 10
@@ -84,8 +82,8 @@ pipeline {
             when { expression { fileExists("${OUTPUT_FILE}") } }
             steps {
                 sh '''
-                    git config --global user.email "soverx.online@gmail.com"
-                    git config --global user.name "SoverX Online"
+                    git config --global user.email "soverx.online@gmail.com"  # Ваш email для git
+                    git config --global user.name "SoverX Online"  # Ваше имя для git
                     git config --global credential.helper 'store --file=.git-credentials'
                     echo "https://soverxpro:${GITHUB_TOKEN}@github.com" > .git-credentials
                     git add "${OUTPUT_FILE}"
