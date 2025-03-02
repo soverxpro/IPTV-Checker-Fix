@@ -4,13 +4,14 @@ pipeline {
     options {
         disableConcurrentBuilds()
         buildDiscarder(logRotator(numToKeepStr: '10'))
-        timeout(time: 240, unit: 'MINUTES') // Изменено на 240 минут по вашему запросу
+        timeout(time: 240, unit: 'MINUTES')
         retry(2)
         timestamps()
     }
     
     triggers {
-        cron('0 0 * * *')
+        // Запуск в 00:00, 06:00, 12:00, 18:00 каждый день
+        cron('0 0,6,12,18 * * *')
     }
     
     environment {
@@ -18,7 +19,7 @@ pipeline {
         REPO_URL = 'https://github.com/soverxpro/IPTV-Checker-Fix.git'
         PLAYLIST_URL = 'https://iptv.org.ua/iptv/avto.m3u8'
         OUTPUT_FILE = 'iptv.m3u'
-        EMAIL_TO = 'soverx.online@gmail.com' // Ваш email
+        EMAIL_TO = 'soverx.online@gmail.com'
     }
     
     stages {
@@ -27,7 +28,6 @@ pipeline {
                 sh '''
                     apt-get update -qq
                     apt-get install -y -qq python3 python3-venv python3-pip ffmpeg git
-                    # Создаем виртуальное окружение сразу
                     python3 -m venv /tmp/venv
                     /tmp/venv/bin/pip install --upgrade pip
                 '''
@@ -44,7 +44,6 @@ pipeline {
                         ])
                         
                         sh '''
-                            # Используем виртуальное окружение из /tmp/venv
                             /tmp/venv/bin/pip install -r requirements.txt
                         '''
                     } catch (Exception e) {
@@ -82,12 +81,12 @@ pipeline {
             when { expression { fileExists("${OUTPUT_FILE}") } }
             steps {
                 sh '''
-                    git config --global user.email "soverx.online@gmail.com"  # Ваш email для git
-                    git config --global user.name "SoverX Online"  # Ваше имя для git
+                    git config --global user.email "soverx.online@gmail.com"
+                    git config --global user.name "SoverX Online"
                     git config --global credential.helper 'store --file=.git-credentials'
                     echo "https://soverxpro:${GITHUB_TOKEN}@github.com" > .git-credentials
                     git add "${OUTPUT_FILE}"
-                    git commit -m "Daily IPTV update: $(date '+%Y-%m-%d %H:%M:%S')"
+                    git commit -m "IPTV update at $(date '+%Y-%m-%d %H:%M:%S')"
                     git push "${REPO_URL}" HEAD:master
                 '''
             }
