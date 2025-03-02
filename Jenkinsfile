@@ -1,11 +1,19 @@
 pipeline {
-    agent any // Используем сам контейнер Jenkins без вложенного Docker
+    agent any
     
-    properties([
-        disableConcurrentBuilds(),
-        buildDiscarder(logRotator(numToKeepStr: '10')),
-        pipelineTriggers([cron('0 0 * * *')])
-    ])
+    // Опции сборки
+    options {
+        disableConcurrentBuilds() // Запрещаем параллельные запуски
+        buildDiscarder(logRotator(numToKeepStr: '10')) // Храним 10 последних сборок
+        timeout(time: 240, unit: 'MINUTES') // Ограничение времени выполнения
+        retry(2) // Повтор при неудаче
+        timestamps() // Добавляем метки времени в лог
+    }
+    
+    // Триггеры запуска
+    triggers {
+        cron('0 0 * * *') // Ежедневно в полночь
+    }
     
     environment {
         GITHUB_TOKEN = credentials('github-token')
@@ -15,16 +23,9 @@ pipeline {
         EMAIL_TO = 'soverx.online@gmail.com' // Укажите ваш email
     }
     
-    options {
-        timeout(time: 30, unit: 'MINUTES')
-        retry(2)
-        timestamps()
-    }
-    
     stages {
         stage('Initialize') {
             steps {
-                // Установка зависимостей в контейнере Jenkins
                 sh '''
                     apt-get update -qq
                     apt-get install -y -qq python3 python3-venv python3-pip ffmpeg git
@@ -73,7 +74,6 @@ pipeline {
         stage('Validate Playlist') {
             when { expression { fileExists("${OUTPUT_FILE}") } }
             steps {
-                // Проверка валидности плейлиста
                 sh '''
                     ffmpeg -i "${OUTPUT_FILE}" -t 5 -f null - || true
                 '''
