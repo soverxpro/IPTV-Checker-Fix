@@ -1,0 +1,101 @@
+#EXTM3U url-tvg="http://iptvx.one/epg/epg.xml.gz"
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Premiere
+http://str30.tv/3078/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Кинозал Premiere 1 HD
+http://str30.tv/7167/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Кинозал Premiere 2 HD
+http://str30.tv/2938/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Кинозал Premiere 3 HD
+http://str30.tv/7597/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Premiere Ultra 4K
+http://str30.tv/3408/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Мультсериал HD
+http://str30.tv/8590/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Kids
+http://str30.tv/8585/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Kids+
+http://str30.tv/6398/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Little
+http://str30.tv/7994/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Кинозал СССР
+http://str30.tv/9118/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Russia 90s
+http://str30.tv/2563/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU VHS
+http://str30.tv/3239/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Action HD
+http://str30.tv/7255/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Cosmo
+http://str30.tv/3559/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Catastrophe HD
+http://str30.tv/5577/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Charm
+http://str30.tv/1665/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Comedy HD
+http://str30.tv/2718/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Fantastic HD
+http://str30.tv/7834/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU FilMystic HD
+http://str30.tv/6071/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU History HD
+http://str30.tv/8129/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Reality
+http://str30.tv/2310/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Marvel HD
+http://str30.tv/1740/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Romantic HD
+http://str30.tv/4559/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Stars HD
+http://str30.tv/9944/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU RUSerial HD
+http://str30.tv/2420/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Russian
+http://str30.tv/4165/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Сваты HD
+http://str30.tv/2307/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Criminal HD
+http://str30.tv/3871/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Cinema HD
+http://str30.tv/1086/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Cinema+ HD
+http://str30.tv/6536/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Kinorating
+http://str30.tv/2071/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU Survival
+http://str30.tv/6035/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="KINOZAL BCU", BCU TruMotion
+http://str30.tv/8885/video.m3u8?token=9bd5c60f0cede7fd151cc9b5da1f0799
+#EXTINF:-1 group-title="Usba TV",Украина
+https://fl1001.bozztv.com/ushba5/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="Usba TV",Украина 2
+https://fl1001.bozztv.com/ushba12/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="Usba TV",Военный
+https://fl1001.bozztv.com/ushba16/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="Usba TV",Ералаш
+https://fl1001.bozztv.com/ushba8/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="Usba TV",Приколы 1
+https://fl1001.bozztv.com/ushba11/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="Usba TV",Приколы 2
+https://fl1001.bozztv.com/ushba20/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="Usba TV",Шоу Бенни Хилла
+https://fl1001.bozztv.com/ushba62/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="Usba TV",Мистер Бин
+https://fl1001.bozztv.com/ushba45/index.m3u8
+#EXTINF:-1 group-title="Usba TV",Документалка 1
+https://fl1001.bozztv.com/ushba28/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="Usba TV",Документалка 2
+https://fl1001.bozztv.com/ushba29/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="Usba TV",Документалка 3
+https://fl1001.bozztv.com/ushba38/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="Usba TV",Танцы 1
+https://fl1001.bozztv.com/ushba17/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="Usba TV",Танцы 2
+https://fl1001.bozztv.com/ushba15/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="Usba TV",Танцы 3
+https://fl1001.bozztv.com/ushba56/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="Usba TV",Тик Ток
+https://fl1001.bozztv.com/ushba61/index.m3u8
+#EXTINF:-1 group-title="Usba TV",Gameplay
+https://fl1001.bozztv.com/ushba31/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="Usba TV",Gameplay трейлеры
+https://fl1001.bozztv.com/ushba44/index.m3u8
