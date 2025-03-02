@@ -17,7 +17,7 @@ pipeline {
     environment {
         GITHUB_TOKEN = credentials('github-token')
         REPO_URL = 'https://github.com/soverxpro/IPTV-Checker-Fix.git'
-        PLAYLIST_URL = 'https://iptv.org.ua/iptv/avto.m3u8'
+        PLAYLIST_URL = 'https://raw.githubusercontent.com/soverxpro/IPTV-Checker-Fix/refs/heads/master/full-channels-fix.m3u'
         OUTPUT_FILE = 'iptv.m3u'
         EMAIL_TO = 'soverx.online@gmail.com'
     }
