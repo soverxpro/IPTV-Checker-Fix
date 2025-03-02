@@ -14,7 +14,7 @@ pipeline {
     
     environment {
         REPO_URL = 'https://github.com/soverxpro/IPTV-Checker-Fix.git'
-        PLAYLIST_URL = 'https://raw.githubusercontent.com/soverxpro/IPTV-Checker-Fix/refs/heads/master/test.m3u'
+        PLAYLIST_URL = 'https://tva.in.ua/iptv/s/ua.m3u'
         OUTPUT_FILE = 'iptv.m3u'
     }
     
