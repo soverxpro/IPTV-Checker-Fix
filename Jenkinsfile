@@ -5,12 +5,11 @@ pipeline {
         disableConcurrentBuilds()
         buildDiscarder(logRotator(numToKeepStr: '10'))
         timeout(time: 240, unit: 'MINUTES')
-        retry(2)
         timestamps()
     }
     
     triggers {
-        cron('0 0,6,12,18 * * *')
+        cron('0 0,6,12,18 * * *') // Запуск 4 раза в день: 00:00, 06:00, 12:00, 18:00
     }
     
     environment {
@@ -36,9 +35,12 @@ pipeline {
             steps {
                 script {
                     try {
+                        echo "GITHUB_TOKEN is set to: ${GITHUB_TOKEN ? 'present' : 'not present'}"
+                        
+                        // Используем токен напрямую в URL для обхода проблемы с выпадающим списком SCM
                         checkout([$class: 'GitSCM',
                             branches: [[name: '*/master']],
-                            userRemoteConfigs: [[url: "${REPO_URL}", credentialsId: 'github-token']]
+                            userRemoteConfigs: [[url: "https://soverxpro:${GITHUB_TOKEN}@github.com/soverxpro/IPTV-Checker-Fix.git"]]
                         ])
                         
                         sh '''
@@ -78,15 +80,19 @@ pipeline {
         stage('Deploy to GitHub') {
             when { expression { fileExists("${OUTPUT_FILE}") } }
             steps {
-                sh '''
-                    git config --global user.email "soverx.online@gmail.com"
-                    git config --global user.name "SoverX Online"
-                    git config --global credential.helper 'store --file=.git-credentials'
-                    echo "https://soverxpro:${GITHUB_TOKEN}@github.com" > .git-credentials
-                    git add "${OUTPUT_FILE}"
-                    git commit -m "IPTV update: $(date '+%Y-%m-%d %H:%M:%S')"
-                    git push "${REPO_URL}" HEAD:master
-                '''
+                script {
+                    retry(2) {
+                        sh '''
+                            git config --global user.email "soverx.online@gmail.com"
+                            git config --global user.name "SoverX Online"
+                            git config --global credential.helper 'store --file=.git-credentials'
+                            echo "https://soverxpro:${GITHUB_TOKEN}@github.com" > .git-credentials
+                            git add "${OUTPUT_FILE}"
+                            git commit -m "IPTV update: $(date '+%Y-%m-%d %H:%M:%S')"
+                            git push "${REPO_URL}" HEAD:master
+                        '''
+                    }
+                }
             }
         }
     }
