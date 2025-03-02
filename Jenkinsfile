@@ -5,12 +5,12 @@ pipeline {
         disableConcurrentBuilds()
         buildDiscarder(logRotator(numToKeepStr: '10'))
         timeout(time: 240, unit: 'MINUTES')
-        retry(2) // Глобальный retry лучше убрать или перенести на конкретные шаги
+        retry(2)
         timestamps()
     }
     
     triggers {
-        cron('0 0,6,12,18 * * *') // Запуск 4 раза в день
+        cron('0 0,6,12,18 * * *')
     }
     
     environment {
@@ -18,7 +18,6 @@ pipeline {
         REPO_URL = 'https://github.com/soverxpro/IPTV-Checker-Fix.git'
         PLAYLIST_URL = 'https://raw.githubusercontent.com/soverxpro/IPTV-Checker-Fix/refs/heads/master/test.m3u'
         OUTPUT_FILE = 'iptv.m3u'
-        // EMAIL_TO удален, так как уведомления больше не нужны
     }
     
     stages {
@@ -39,7 +38,7 @@ pipeline {
                     try {
                         checkout([$class: 'GitSCM',
                             branches: [[name: '*/master']],
-                            userRemoteConfigs: [[url: "${REPO_URL}", credentialsId: 'github-token']] // Добавлен credentialsId для надежности
+                            userRemoteConfigs: [[url: "${REPO_URL}", credentialsId: 'github-token']]
                         ])
                         
                         sh '''
@@ -85,7 +84,7 @@ pipeline {
                     git config --global credential.helper 'store --file=.git-credentials'
                     echo "https://soverxpro:${GITHUB_TOKEN}@github.com" > .git-credentials
                     git add "${OUTPUT_FILE}"
-                    git commit -m "IPTV update: $(date '+%Y-%m-%d %H:%M:%S')" // Убрано "Daily", так как обновление 4 раза в день
+                    git commit -m "IPTV update: $(date '+%Y-%m-%d %H:%M:%S')"
                     git push "${REPO_URL}" HEAD:master
                 '''
             }
@@ -94,7 +93,7 @@ pipeline {
     
     post {
         always {
-            sh 'rm -f .git-credentials || true' // Добавлено || true для устойчивости
+            sh 'rm -f .git-credentials || true'
             archiveArtifacts artifacts: "${OUTPUT_FILE}", allowEmptyArchive: true
             cleanWs()
         }
