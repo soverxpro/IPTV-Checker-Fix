@@ -29,7 +29,7 @@ pipeline {
                 sh '''
                     apt-get update -qq
                     apt-get install -y -qq python3 python3-venv python3-pip ffmpeg git
-                    python3 -m pip install --upgrade pip
+                    python3 -m venv venv
                 '''
             }
         }
